@@ -11,6 +11,9 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function(){
     return view('CG-CTF');
 });
+Route::get('/user','UserController@index');
+Route::post('/user/login','UserController@login');
+Route::get('/user/logout','UserController@logout');
