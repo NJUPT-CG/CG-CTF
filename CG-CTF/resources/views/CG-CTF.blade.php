@@ -25,11 +25,13 @@
 	</ul></div>
 <br>
 <div id="WelcomeWords">welcome to CG-CTF!!!</div>
-<a href="{{url('/login')}}">登录</a>
 
 @if(Auth::check())
-	<p>您已登陆</p>
+	<p>{{Auth::user()->name}}
 	<a href="{{url('user/logout')}}">登出</a>
+	</p>
+@else
+    <a href="{{url('/login')}}">登录</a>
 @endif                           <!--检测是否登录-->
 </body>
 </html>
