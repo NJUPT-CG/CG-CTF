@@ -25,7 +25,7 @@
 	</ul></div>
 <br>
 <div id="WelcomeWords">welcome to CG-CTF!!!</div>
-<a href="{{url('/user')}}">登录</a>
+<a href="{{url('/login')}}">登录</a>
 
 @if(Auth::check())
 	<p>您已登陆</p>
