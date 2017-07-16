@@ -31,9 +31,9 @@ class User extends Authenticatable
 
     public static function isadmin(){
         if(Auth::check()){
-        if(Hash::check('admin',Auth::user()->power)) return true;
+            if(Hash::check('admin',Auth::user()->power)) return true;
+            else return false;
+            }
         else return false;
-        }
-        else return redirect()->route('login');
     }
 }

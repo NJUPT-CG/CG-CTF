@@ -12,6 +12,7 @@ class ChallengeController extends Controller
     	if(User::isadmin()){
     		return view('create');
     	}
+    	else return redirect()->route('login');
     }
 
 
@@ -31,6 +32,16 @@ class ChallengeController extends Controller
     							]);
     	}
     }
+   
+    public function edit($id){
+        if(User::isadmin()){
+        	$challenge=challenge::find($id);
+        	return view('edit',['challenge'=>$challenge]);
+
+        }
+        else return redirect()->route('login');
+
+    }
 
     public function editchallenge($id,Request $data){
     	if(User::isadmin()){
@@ -43,9 +54,10 @@ class ChallengeController extends Controller
     		$challenge->description=$request['description'];
     		$challenge->url=$request['url'];
     		$challenge->flag=$request['flag'];
-    		$challenge->info=$request['info'];
+    		//$challenge->info=$request['info'];
 
-    		return $challenge->save();
+    	   if($challenge->save()) return view('CG-CTF');
+    	   else return view('edit',['statue'=>'出现错误']);
 
     	}
     }

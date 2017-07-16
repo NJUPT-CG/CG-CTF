@@ -23,6 +23,7 @@ Route::get('/create','ChallengeController@index');
 Route::post('/newchallenge','ChallengeController@newchallenge');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/edit/{id}','ChallengeController@edit');
+Route::post('/editchallenge/{id}','ChallengeController@editchallenge');
 
 //用于临时创建管理员,测试用的.
 Route::get('/createadmin',function(){

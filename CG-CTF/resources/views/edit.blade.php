@@ -16,11 +16,11 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">{{$statue or '新增'}}</div>
+                <div class="panel-heading">{{$statue or '修改'}}</div>
                 <div class="panel-body">
-                    <form action="{{ url('newchallenge') }}" method="POST">
+                    <form action="{{ url('/editchallenge/'.$challenge->id ) }}" method="POST">
                         {!! csrf_field() !!}
-                        <input type="text" name="title" class="form-control" required="required" placeholder="请输入标题" value="{{old('title')}}">
+                        <input type="text" name="title" class="form-control" required="required" placeholder="请输入标题" value="{{$challenge->title or ''}}">
                         <div class="form-group">
                          <label for="class">分类</label>
                          <select class="form-control" id="class" name="class">
@@ -33,14 +33,14 @@
                         </div>
 
                         <br>
-                        <input type="text" name="flag" class="form-control" required="required" placeholder="flag" value="{{old('flag')}}">
+                        <input type="text" name="flag" class="form-control" required="required" placeholder="flag" value="{{$challenge->flag or ''}}">
 
-                        <input type="text" name="url" class="form-control" placeholder="url" value="{{old('url')}}">
+                        <input type="text" name="url" class="form-control" placeholder="url" value="{{$challenge->url or ''}}">
 
-                        <textarea name="description"  rows="10" class="form-control" splaceholder="请输入内容" >{{old('description')}}</textarea>
+                        <textarea name="description"  rows="10" class="form-control" splaceholder="请输入内容" >{{$challenge->description or ''}}</textarea>
                     
                         <br>
-                        <button class="btn btn-lg btn-info">新增</button>
+                        <button class="btn btn-lg btn-info">修改</button>
                     </form>
 
                 </div>
