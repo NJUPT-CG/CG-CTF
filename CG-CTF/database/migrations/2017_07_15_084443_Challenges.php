@@ -21,7 +21,7 @@ class Challenges extends Migration
             $table->text('url')->nullable();;       //题目或附件地址
             $table->text('flag');     //flag
             $table->text('info')->nullable();;     //备注
-            $table->integet('score');
+            $table->integer('score');    //分数
             $table->timestamps();
         });
     }

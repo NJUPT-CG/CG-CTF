@@ -37,6 +37,9 @@
 
                         <input type="text" name="url" class="form-control" placeholder="url" value="{{$challenge->url or ''}}">
 
+                        <input type="integer" name="score" class="form-control" placeholder="score" value="{{$challenge->score or ''}}">
+
+
                         <textarea name="description"  rows="10" class="form-control" splaceholder="请输入内容" >{{$challenge->description or ''}}</textarea>
                     
                         <br>
