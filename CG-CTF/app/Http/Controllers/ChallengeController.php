@@ -29,6 +29,7 @@ class ChallengeController extends Controller
     							  'url'=>$request['url'],
     							  'flag'=>$request['flag'],
     							  //'info'=>$request['info'],
+                                  'score'=>$request['score'],
     							]);
     	}
     }
@@ -55,6 +56,7 @@ class ChallengeController extends Controller
     		$challenge->url=$request['url'];
     		$challenge->flag=$request['flag'];
     		//$challenge->info=$request['info'];
+            $challenge->score=$request['score'];
 
     	   if($challenge->save()) return view('CG-CTF');
     	   else return view('edit',['statue'=>'出现错误']);

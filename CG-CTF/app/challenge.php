@@ -8,5 +8,5 @@ class challenge extends Model
 {
     //
     protected $table='Challenges';
-    protected $fillable=['title','class','description','url','flag','info'];
+    protected $fillable=['title','class','description','url','flag','info','score'];
 }

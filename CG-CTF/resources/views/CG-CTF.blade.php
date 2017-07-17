@@ -28,6 +28,7 @@
 
 @if(Auth::check())
 	<p>{{Auth::user()->name}}
+	
 	<a href="{{url('user/logout')}}">登出</a>
 	</p>
 @else
