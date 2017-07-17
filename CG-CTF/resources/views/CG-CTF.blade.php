@@ -16,11 +16,11 @@
 </style>
 <body>
 <div><ul id="menu">
-	<li href="#">Web</li>
-	<li href="#">Re</li>
-	<li href="#">Pwn</li>
-	<li href="#">Crypto</li>
-	<li href="#">Misc</li>
+		<li><a href="{{url('challenges/Web')}}">Web</a></li>
+		<li><a href="{{url('challenges/Re')}}">Re</a></li>
+		<li><a href="{{url('challenges/Pwn')}}">Pwn</a></li>
+		<li><a href="{{url('challenges/Crypto')}}">Crypto</a></li>
+		<li><a href="{{url('challenges/Misc')}}">Misc</a></li>
 	<li href="#">About</li>
 	</ul></div>
 <br>
@@ -28,7 +28,7 @@
 
 @if(Auth::check())
 	<p>{{Auth::user()->name}}
-	
+		<a >Admin</a>
 	<a href="{{url('user/logout')}}">登出</a>
 	</p>
 @else
