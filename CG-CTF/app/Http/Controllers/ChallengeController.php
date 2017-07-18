@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\challenge;
 use App\User;
+
+
 class ChallengeController extends Controller
 {
     //
@@ -59,8 +61,29 @@ class ChallengeController extends Controller
             $challenge->score=$request['score'];
 
     	   if($challenge->save()) return view('CG-CTF');
-    	   else return view('edit',['statue'=>'出现错误']);
+    	   else return view('edit',['status'=>'出现错误']);
 
     	}
+    }
+
+    public function showChallenges($fields){             //显示对应板块的题目
+        $challengeInfo = challenge::where('class', $fields)->get();             //根据传递的板块搜索题目信息
+        return view('challenge', compact('challengeInfo'));
+
+
+    }
+
+    public function showChallengeDetail($id)
+    {
+        if (Auth::check()){
+            $challengeInfo = challenge::find($id);
+            return view('challengedetail', ['challenge'=>$challengeInfo]);
+        }
+        else return redirect()->route('login');
+    }
+
+    public function submitFlag($id, Request $flag)
+    {
+        
     }
 }

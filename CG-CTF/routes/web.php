@@ -34,3 +34,8 @@ Route::get('/createadmin',function(){
             'power' => bcrypt('admin'),
         ]);
 });
+
+Route::get('challenges/{fields}','ChallengeController@showChallenges');   //展示对应版块题目
+
+
+Route::post('submitflag/{id}', 'ChallengeController@submitFlag');

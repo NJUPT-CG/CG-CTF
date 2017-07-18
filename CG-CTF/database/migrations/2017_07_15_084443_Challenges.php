@@ -22,6 +22,7 @@ class Challenges extends Migration
             $table->text('flag');     //flag
             $table->text('info')->nullable();;     //备注
             $table->integer('score');    //分数
+
             $table->timestamps();
         });
     }
