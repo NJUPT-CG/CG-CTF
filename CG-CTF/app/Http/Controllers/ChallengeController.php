@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\challenge;
 use App\User;
 
@@ -67,12 +68,12 @@ class ChallengeController extends Controller
     }
 
     public function showChallenges($fields){             //显示对应板块的题目
-        $challengeInfo = challenge::where('class', $fields)->get();             //根据传递的板块搜索题目信息
+        $challengeInfo = challenge::where('class', $fields)->get(['id','title','description','url','info','score']);             //根据传递的板块搜索题目信息
         return view('challenge', compact('challengeInfo'));
 
 
     }
-
+/*
     public function showChallengeDetail($id)
     {
         if (Auth::check()){
@@ -81,7 +82,7 @@ class ChallengeController extends Controller
         }
         else return redirect()->route('login');
     }
-
+*/
     public function submitFlag($id, Request $flag)
     {
         

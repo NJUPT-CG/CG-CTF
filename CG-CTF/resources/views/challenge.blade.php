@@ -61,7 +61,7 @@
                         <h5 class="modal-title" id="ChallengeTitle">{{$challenge['score']}}</h5>
                     </div>
                     <div class="modal-body">
-                        {{$challenge['info']}}
+                        {{$challenge['description']}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
