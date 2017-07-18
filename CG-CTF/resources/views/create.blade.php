@@ -37,6 +37,8 @@
 
                         <input type="text" name="url" class="form-control" placeholder="url" value="{{old('url')}}">
 
+                        <input type="number" name="score" class="form-control" placeholder="score" value="{{old('score')}}">
+
                         <textarea name="description"  rows="10" class="form-control" splaceholder="请输入内容" >{{old('description')}}</textarea>
                     
                         <br>

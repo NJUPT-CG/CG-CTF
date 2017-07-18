@@ -36,3 +36,6 @@ Route::get('/createadmin',function(){
 });
 
 Route::get('challenges/{fields}','ChallengeController@showChallenges');   //展示对应版块题目
+
+
+Route::post('submitflag/{id}', 'ChallengeController@submitFlag');

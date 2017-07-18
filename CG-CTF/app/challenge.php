@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class challenge extends Model
 {
     //
-    protected $table='challenges';
+    protected $table='Challenges';
     protected $fillable=['title','class','description','url','flag','info','score'];
 
 

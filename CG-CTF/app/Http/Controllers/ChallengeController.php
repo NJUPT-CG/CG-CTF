@@ -61,7 +61,7 @@ class ChallengeController extends Controller
             $challenge->score=$request['score'];
 
     	   if($challenge->save()) return view('CG-CTF');
-    	   else return view('edit',['statue'=>'出现错误']);
+    	   else return view('edit',['status'=>'出现错误']);
 
     	}
     }
@@ -71,5 +71,19 @@ class ChallengeController extends Controller
         return view('challenge', compact('challengeInfo'));
 
 
+    }
+
+    public function showChallengeDetail($id)
+    {
+        if (Auth::check()){
+            $challengeInfo = challenge::find($id);
+            return view('challengedetail', ['challenge'=>$challengeInfo]);
+        }
+        else return redirect()->route('login');
+    }
+
+    public function submitFlag($id, Request $flag)
+    {
+        
     }
 }
