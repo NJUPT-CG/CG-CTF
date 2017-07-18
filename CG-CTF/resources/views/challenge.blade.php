@@ -3,6 +3,9 @@
 <head>
     <title>CG-CTF</title>
 </head>
+<link href="//cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <style type="text/css">
     ul ,li{
         list-style: none;
@@ -13,19 +16,8 @@
         margin:6%;
         cursor: pointer;
     }
-    .challenge
-    {
-        position: relative;
-        font-size: 18px;
-        border: 1px solid black;
-        width: 12rem;
-        text-align: center;
-        height: 6rem;
-        padding: 1rem;
-    }
-    <link href="//cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-    <script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    
 </style>
 <body>
 <div><ul id="menu">
@@ -45,20 +37,35 @@
     <a href="{{url('/login')}}">登录</a>
 @endif                           <!--检测是否登录-->
 
-<div id="challenges">
+<div id="challenge-container">
     @if(isset($challengeInfo))
         @foreach($challengeInfo as $challenge)
-        <div id="challenge{{$challenge['id']}}" class="challenge">
-            <!-- <a>{{$challenge['class']}}</a><br> -->
-            <!-- <a>{{$challenge['info']}}</a><br> -->
-            <a>{{$challenge['title']}}</a><br>
-            <br>
-            <a>{{$challenge['score']}}</a><br>
-            <!-- <a>{{$challenge['flag']}}</a><br> -->
-            <!-- <a>{{$challenge['description']}}</a><br> -->
-        </div>
+        <button type="button" id="challenge{{$challenge['id']}}" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+
+            <p>{{$challenge['title']}}</p><br>
+            <p>{{$challenge['score']}}</p>
+
+        </button>
         @endforeach
     @endif
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="ChallengeTitle">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="ChallengeTitle">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
 </div>
 </body>
 </html>
