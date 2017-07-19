@@ -55,6 +55,8 @@
         <div class="modal fade" id="challenges{{$challenge['id']}}" tabindex="-1" role="dialog" aria-labelledby="ChallengeTitle">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
+                <form action="{{ url('/submitflag/'.$challenge->id ) }}" method="POST">
+                    {!! csrf_field() !!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h3 class="modal-title" id="ChallengeTitle">{{$challenge['title']}}</h3>
@@ -63,10 +65,14 @@
                     <div class="modal-body">
                         {{$challenge['description']}}
                     </div>
+                    <div class="modal-body">
+                        <input type="text" name="flag" placeholder="flag" />
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
+                </form>
                 </div>
             </div>
         </div>
