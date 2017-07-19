@@ -41,6 +41,13 @@ class User extends Authenticatable
     {
     return $this->belongsToMany('App\challenge');
     }
+
+    //返回某用户解决的题目
+    public function solvedchallenges($userid){
+    $user = $this->find($userid);
+    $challenges = $user->challenges;
+    return $challenges;
+    }
 /*
     public function finishChallenge($id){
         if (Auth::check())

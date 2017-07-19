@@ -16,4 +16,10 @@ class challenge extends Model
     return $this->belongsToMany('App\User');
     }
 
+    //返回某题目解决的用户
+    public function solvedusers($challengeid){
+    $challenge = $this->find($challengeid);
+	$users = $challenge->users;
+	return $users;
+	}
 }
