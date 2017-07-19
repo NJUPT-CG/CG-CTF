@@ -18,8 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->text('power')->nullable();;
+            $table->text('power')->nullable();
             $table->rememberToken();
+            $table->json('finishedchallenge')->nullable();
             $table->timestamps();
         });
     }

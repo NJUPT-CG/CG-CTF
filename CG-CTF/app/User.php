@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','power'
+        'name', 'email', 'password','power','finishedchallenge'
     ];
 
     /**
@@ -34,6 +34,14 @@ class User extends Authenticatable
             if(Hash::check('admin',Auth::user()->power)) return true;
             else return false;
             }
+        else return false;
+    }
+
+    public function finishChallenge($id){
+        if (Auth::check())
+        {
+            Auth::user()->finishedchallenge
+        }
         else return false;
     }
 }

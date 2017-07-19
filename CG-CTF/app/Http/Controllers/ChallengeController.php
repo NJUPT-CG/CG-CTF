@@ -85,6 +85,15 @@ class ChallengeController extends Controller
 */
     public function submitFlag($id, Request $flag)
     {
-        
+        if (Auth::check()){             //whether login
+            if (Auth::user()->where()){                      //whether finished
+                $correctFlag = challenge::find($id)->flag;
+                if ($flag === $correctFlag){        //whether correct
+
+                }
+                else;
+            }
+        }
+        else return redirect()->route('login');
     }
 }
