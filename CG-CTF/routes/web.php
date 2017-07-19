@@ -25,6 +25,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/edit/{id}','ChallengeController@edit');
 Route::post('/editchallenge/{id}','ChallengeController@editchallenge');
 
+//Route::get('qwer',function(){echo (App\User::solvedchallenges(7));});
+
 //用于临时创建管理员,测试用的.
 Route::get('/createadmin',function(){
        return App\User::create([

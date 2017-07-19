@@ -39,13 +39,13 @@ class User extends Authenticatable
 
     public function challenges()
     {
-    return $this->belongsToMany('App\challenge');
+    return $this->belongsToMany('App\challenge','challenge_users','userid','challengeid')->withPivot('created_at');
     }
 
     //返回某用户解决的题目
-    public function solvedchallenges($userid){
-    $user = $this->find($userid);
-    $challenges = $user->challenges;
+    public static function solvedchallenges($userid){
+    $user = User::find($userid);
+    $challenges = $user->challenges()->get();
     return $challenges;
     }
 /*
