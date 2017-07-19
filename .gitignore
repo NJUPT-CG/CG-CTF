@@ -1,0 +1,13 @@
+
+/CG-CTF/vendor/*
+/CG-CTF/node_modules
+/CG-CTF/public/hot
+/CG-CTF/public/storage
+/CG-CTF/storage/*.key
+/CG-CTF/vendor/*
+/CG-CTF/.idea
+/CG-CTF/.vagrant
+/CG-CTF/Homestead.json
+/CG-CTF/Homestead.yaml
+/CG-CTF/npm-debug.log
+/CG-CTF/.env

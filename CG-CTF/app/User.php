@@ -37,11 +37,17 @@ class User extends Authenticatable
         else return false;
     }
 
+    public function challenges()
+    {
+    return $this->belongsToMany('App\challenge');
+    }
+/*
     public function finishChallenge($id){
         if (Auth::check())
         {
-            Auth::user()->finishedchallenge
+            Auth::user()->finishedchallenge;
         }
         else return false;
     }
+*/
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\challenge;
 use App\User;
+use App\challenge_user;
 
 
 class ChallengeController extends Controller
@@ -83,16 +84,21 @@ class ChallengeController extends Controller
         else return redirect()->route('login');
     }
 */
-    public function submitFlag($id, Request $flag)
-    {
+    public function submitFlag($id, Request $data)
+    {	
+    	$data->flash();
+    	$flag=$data['flag'];
         if (Auth::check()){             //whether login
-            if (Auth::user()->where()){                      //whether finished
+        	$userid=Auth::id();
+            if (!challenge_user::where(['userid'=>$userid,'challengeid'=>$id])->first()){                      //whether finished
                 $correctFlag = challenge::find($id)->flag;
                 if ($flag === $correctFlag){        //whether correct
+                	return challenge_user::create(['userid'=>$userid,'challengeid'=>$id]);
 
                 }
-                else;
+                else return  'wrong';
             }
+            else return 'solved';
         }
         else return redirect()->route('login');
     }
