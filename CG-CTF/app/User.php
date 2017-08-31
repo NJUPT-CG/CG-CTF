@@ -81,7 +81,14 @@ class User extends Authenticatable
             #echo '<br>';
             #$user->put('totalScore',$totalScore);
         }
-        $sorted = $scores->sortByDesc('totalScore');
+        //echo $scores;
+        //$sorted = $scores->sortBy('lastsubtime')->sortByDesc('totalScore');
+        $sorted = $scores->sort(
+                    function ($a, $b) {
+                    return strcmp($b['totalScore'], $a['totalScore']) ?:strcmp($a['lastsubtime'], $b['lastsubtime']);
+                     }
+        );
+        
         return $sorted->values();
     }
 /*
