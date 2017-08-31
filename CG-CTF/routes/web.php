@@ -52,7 +52,10 @@ Route::get('/score',function(){
 		echo Auth::user()->name;
 		echo '<br>';
 		$score = App\User::userscore($id);
+		echo "Score: ";
 		echo $score;
+		echo '<br>';
+		echo 'Solved Challenges:';
 		echo '<br>';
 		$challenges = App\User::solvedchallenges($id);
 		foreach ($challenges as $challenge) {
