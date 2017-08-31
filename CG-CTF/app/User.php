@@ -46,7 +46,43 @@ class User extends Authenticatable
     public static function solvedchallenges($userid){
     $user = User::find($userid);
     $challenges = $user->challenges()->get();
-    return $challenges;
+    $sorted = $challenges->sortByDesc('pivot.created_at');
+    return $sorted->values();
+    #return $challenges;
+    }
+
+    //用户得分
+    public static function userscore($id){
+            $solveds=User::solvedchallenges($id);
+            #echo $solveds;
+            $totalScore=0;
+            foreach ($solveds as $solved ) {
+                 $totalScore+=$solved->score;
+            }   
+            return $totalScore;
+    }
+
+    //计分板
+    public static function scoreboard(){
+        $scores=collect([]);
+        $users = User::all();
+        foreach ($users as $user ) {
+            #echo $user;
+            $id = $user->id;
+            $name = $user->name;
+            $totalScore = User::userscore($id); 
+            $subs = User::solvedchallenges($id)->first();
+            #$subs = collect([$subs]);
+            #$time = $subs->first();
+            $lastsubtime = $subs['pivot']['created_at'];
+            #pivot['created_at'];
+            $scores->push(array('id'=>$id,'name'=>$name,'totalScore'=>$totalScore,'lastsubtime'=>$lastsubtime));
+            #echo $totalScore;
+            #echo '<br>';
+            #$user->put('totalScore',$totalScore);
+        }
+        $sorted = $scores->sortByDesc('totalScore');
+        return $sorted->values();
     }
 /*
     public function finishChallenge($id){

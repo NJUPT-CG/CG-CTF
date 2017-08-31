@@ -21,6 +21,7 @@ class challenge extends Model
     public static function solvedusers($challengeid){
     $challenge = challenge::find($challengeid);
 	$users = $challenge->users()->get();
-	return $users;
+    $sorted = $users->sortBy('pivot.created_at');
+	return $sorted->values();
 	}
 }

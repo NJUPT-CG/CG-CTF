@@ -36,8 +36,7 @@
 @else
     <a href="{{url('/login')}}">登录</a>
 @endif                           <!--检测是否登录-->
-
-<div id="challenge-container">
+<div id="challenge-container" class="row">
     @if(isset($challengeInfo))
         @foreach($challengeInfo as $challenge)
         <button type="button" id="challenge{{$challenge['id']}}" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#challenges{{$challenge['id']}}">
