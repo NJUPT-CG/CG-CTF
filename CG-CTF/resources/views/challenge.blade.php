@@ -1,52 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>CG-CTF</title>
-</head>
-<link href="//cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<style type="text/css">
-    ul ,li{
-        list-style: none;
-    }
-    #menu li{
-        float:left;
-        color:red;
-        margin:6%;
-        cursor: pointer;
-    }
 
-    
+@extends('layouts.app')
+<style type="text/css">
+    .row-margin-top {
+    margin-top: 5px;
+    margin-bottom: 5px; 
+}
+
 </style>
-<body>
-<div><ul id="menu">
-        <li><a href="{{url('challenges/Web')}}">Web</a></li>
-        <li><a href="{{url('challenges/Re')}}">Re</a></li>
-        <li><a href="{{url('challenges/Pwn')}}">Pwn</a></li>
-        <li><a href="{{url('challenges/Crypto')}}">Crypto</a></li>
-        <li><a href="{{url('challenges/Misc')}}">Misc</a></li>
-        <li href="#">About</li>
-    </ul></div>
+@section('content')
+@if (count($errors) > 0)
+                        <div class="alert alert-danger" id="alert">
+                            {!! implode('<br>', $errors->all()) !!}
+                        </div>
+                        <script>
+                        setTimeout(function(){document.getElementById("alert").style.display="none";},3000);
+//1000是多久被隐藏，单位毫秒
+                        </script>
+@endif
+<ul class="nav nav-tabs">
+  <li role="presentation" class="{{$class=='Web'? 'active':''}}" id="Web"><a href="{{url('challenges/Web')}}">Web</a></li>
+  <li role="presentation"  class="{{$class=='Re'? 'active':''}}" id="Re"><a href="{{url('challenges/Re')}}">Re</a></li>
+  <li role="presentation" class="{{$class=='Pwn'? 'active':''}}" id="Pwn"><a href="{{url('challenges/Pwn')}}">Pwn</a></li>
+  <li role="presentation" class="{{$class=='Crypto'? 'active':''}}" id="Crypto"><a href="{{url('challenges/Crypto')}}">Crypto</a></li>
+  <li role="presentation" class="{{$class=='Misc'? 'active':''}}" id="Misc"><a href="{{url('challenges/Misc')}}">Misc</a></li>
+  <li role="presentation"><a href="#">About</a></li>
+</ul>
 <br>
-@if(Auth::check())
-    <p>{{Auth::user()->name}}
-        <a href="{{url('user/logout')}}">登出</a>
-    </p>
-@else
-    <a href="{{url('/login')}}">登录</a>
-@endif                           <!--检测是否登录-->
+<div class="container">
 <div id="challenge-container" class="row">
+ <div class="col-md-12">
     @if(isset($challengeInfo))
         @foreach($challengeInfo as $challenge)
-        <button type="button" id="challenge{{$challenge['id']}}" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#challenges{{$challenge['id']}}">
+        <div class="col-md-2  row-margin-top">
+        <button type="button" id="challenge{{$challenge['id']}}" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#challenges{{$challenge['id']}}">
 
             <p>{{$challenge['title']}}</p><br>
-            <p>{{$challenge['score']}}</p>
+            <p>{{$challenge['score'].' pt'}}</p>
 
         </button>
+        </div>
         @endforeach
     @endif
+    </div>
+</div>
 </div>
 <!-- Modal -->
 @if(isset($challengeInfo))
@@ -59,11 +55,16 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h3 class="modal-title" id="ChallengeTitle">{{$challenge['title']}}</h3>
-                        <h5 class="modal-title" id="ChallengeTitle">{{$challenge['score']}}</h5>
+                        <h5 class="modal-title" id="ChallengeTitle">{{$challenge['score'].' pt'}}</h5>
                     </div>
                     <div class="modal-body">
                         {{$challenge['description']}}
                     </div>
+                    @if($challenge['url'])
+                    <div class="modal-body">
+                        <a href="{{ url($challenge['url']) }}">题目地址</a>
+                    </div>
+                    @endif
                     <div class="modal-body">
                         <input type="text" name="flag" placeholder="flag" />
                     </div>
@@ -77,6 +78,4 @@
         </div>
     @endforeach
     @endif
-
-</body>
-</html>
+@endsection

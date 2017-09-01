@@ -63,6 +63,26 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
+                                    <li>
+                                        <a href="{{ url('/score') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('score').submit();">
+                                            Score
+                                        </a>
+
+                                        <form id="score" action="{{ url('/score') }}" method="GET" style="display: none;">
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/scoreboard') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('scoreboard').submit();">
+                                            ScoreBoard
+                                        </a>
+
+                                        <form id="scoreboard" action="{{ url('/scoreboard') }}" method="GET" style="display: none;">
+                                        </form>
+                                    </li>
                                 </ul>
                             </li>
                         @endif

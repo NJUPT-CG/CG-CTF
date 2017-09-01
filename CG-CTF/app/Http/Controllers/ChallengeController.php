@@ -62,7 +62,7 @@ class ChallengeController extends Controller
     		//$challenge->info=$request['info'];
             $challenge->score=$request['score'];
 
-    	   if($challenge->save()) return view('CG-CTF');
+    	   if($challenge->save()) return redirect()->route('login');
     	   else return view('edit',['status'=>'出现错误']);
 
     	}
@@ -70,7 +70,7 @@ class ChallengeController extends Controller
 
     public function showChallenges($fields){             //显示对应板块的题目
         $challengeInfo = challenge::where('class', $fields)->get(['id','title','description','url','info','score']);             //根据传递的板块搜索题目信息
-        return view('challenge', compact('challengeInfo'));
+        return view('challenge', ['challengeInfo'=>$challengeInfo,'class'=>$fields]);
 
 
     }
@@ -93,12 +93,15 @@ class ChallengeController extends Controller
             if (!challenge_user::where(['userid'=>$userid,'challengeid'=>$id])->first()){                      //whether finished
                 $correctFlag = challenge::find($id)->flag;
                 if ($flag === $correctFlag){        //whether correct
-                	return challenge_user::create(['userid'=>$userid,'challengeid'=>$id]);
+                	challenge_user::create(['userid'=>$userid,'challengeid'=>$id]);
+                    return redirect()->back()->withInput()->withErrors('correct!');
 
                 }
-                else return  'wrong';
+                else return  redirect()->back()->withInput()->withErrors('wrong!');
+;
             }
-            else return 'solved';
+            else return redirect()->back()->withInput()->withErrors('solved!');
+;
         }
         else return redirect()->route('login');
     }

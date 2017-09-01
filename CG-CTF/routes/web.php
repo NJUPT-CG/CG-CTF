@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function(){
-    return view('CG-CTF');
+    return redirect()->route('login');
 });
 Route::get('/user','UserController@index');
 //Route::post('/user/login','UserController@login');
