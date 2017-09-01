@@ -74,6 +74,23 @@ class ChallengeController extends Controller
 
 
     }
+
+    public function ShowScoreBoard(){
+
+        $users=User::scoreboard();
+        return view('scoreboard',['users'=>$users]);
+    }
+
+    public function ShowScore(){
+        if(Auth::check()){
+            $id=Auth::id();
+            $score = User::userscore($id);
+            $challenges = User::solvedchallenges($id);
+            //return $challenges;
+           return view('score',['score'=>$score,'challenges'=>$challenges]);
+    }
+    else return redirect()->route('login');
+    }
 /*
     public function showChallengeDetail($id)
     {

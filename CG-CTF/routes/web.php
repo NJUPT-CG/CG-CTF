@@ -26,50 +26,9 @@ Route::get('/edit/{id}','ChallengeController@edit');
 Route::post('/editchallenge/{id}','ChallengeController@editchallenge');
 
 // 计分板测试
-Route::get('/scoreboard',function(){
+Route::get('/scoreboard','ChallengeController@ShowScoreBoard');
 
-	$users=App\User::scoreboard();
-	
-	$rank=0;
-	foreach ($users as $user ) {
-
-		$rank++;
-		echo $rank.' :   ';
-		echo $user['name'];
-		echo '   ';
-		echo $user['totalScore'];
-		echo '    ';
-		echo $user['lastsubtime'];
-		echo '<br>';
-
-		# code...
-	}
-});
-
-Route::get('/score',function(){
-	if(Auth::check()){
-		$id=Auth::id();
-		echo Auth::user()->name;
-		echo '<br>';
-		$score = App\User::userscore($id);
-		echo "Score: ";
-		echo $score;
-		echo '<br>';
-		echo 'Solved Challenges:';
-		echo '<br>';
-		$challenges = App\User::solvedchallenges($id);
-		foreach ($challenges as $challenge) {
-			echo $challenge['title'];
-			echo '  ';
-			echo $challenge['score'];
-			echo '  ';
-			echo $challenge['pivot']['created_at'];
-			echo '<br>';
-		}
-	}
-	else return redirect()->route('login');
-
-});
+Route::get('/score','ChallengeController@ShowScore');
 
 
 //用于临时创建管理员,测试用的.
