@@ -69,8 +69,32 @@ class ChallengeController extends Controller
     }
 
     public function showChallenges($fields){             //显示对应板块的题目
-        $challengeInfo = challenge::where('class', $fields)->get(['id','title','description','url','info','score']);             //根据传递的板块搜索题目信息
-        return view('challenge', ['challengeInfo'=>$challengeInfo,'class'=>$fields]);
+        $challengeInfo = challenge::where('class', $fields)->get(['id','title','description','url','info','score']);
+        if(Auth::check()){
+            $userid=Auth::id();
+            $challengeData=collect([]);
+            foreach ($challengeInfo as $challenge) {
+                $challengeid=$challenge->id;
+                $issolved=0;
+
+                if(challenge_user::where(['userid'=>$userid,'challengeid'=>$challengeid])->first()) {
+                    $issolved=1;
+                }
+                else{$issolved=0;}
+
+                $challengeData->push(array('id'=>$challenge->id,
+                                           'title'=>$challenge->title,
+                                           'description'=>$challenge->description,
+                                           'url'=>$challenge->url,
+                                           'info'=>$challenge->info,
+                                           'score'=>$challenge->score,
+                                           'issolved'=>$issolved));
+
+            }
+           return  view('challenge', ['challengeInfo'=>$challengeData->values(),'class'=>$fields]); 
+        }
+                     //根据传递的板块搜索题目信息
+     return view('challenge', ['challengeInfo'=>$challengeInfo,'class'=>$fields]);
 
 
     }

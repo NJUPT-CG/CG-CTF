@@ -32,7 +32,7 @@
     @if(isset($challengeInfo))
         @foreach($challengeInfo as $challenge)
         <div class="col-md-2  row-margin-top">
-        <button type="button" id="challenge{{$challenge['id']}}" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#challenges{{$challenge['id']}}">
+        <button type="button" id="challenge{{$challenge['id']}}" class="btn btn-{{$challenge['issolved']?'success':'primary'}} btn-lg btn-block" data-toggle="modal" data-target="#challenges{{$challenge['id']}}">
 
             <p>{{$challenge['title']}}</p><br>
             <p>{{$challenge['score'].' pt'}}</p>
@@ -50,7 +50,7 @@
         <div class="modal fade" id="challenges{{$challenge['id']}}" tabindex="-1" role="dialog" aria-labelledby="ChallengeTitle">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                <form action="{{ url('/submitflag/'.$challenge->id ) }}" method="POST">
+                <form action="{{ url('/submitflag/'.$challenge['id']) }}" method="POST">
                     {!! csrf_field() !!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
