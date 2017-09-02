@@ -89,7 +89,12 @@ class User extends Authenticatable
                     return strcmp($b['totalScore'], $a['totalScore']) ?:strcmp($a['lastsubtime'], $b['lastsubtime']);
                      }
         );
-        
+        $rank=0;
+        foreach ($sorted as $sort => $v) {
+            $temp = collect($sorted[$sort]);
+            $temp->put('rank',++$rank);
+            $sorted[$sort]=$temp->toArray();
+        }
         return $sorted->values();
     }
 /*
