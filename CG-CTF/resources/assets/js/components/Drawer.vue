@@ -1,16 +1,16 @@
 <template>
     <div id="drawer">
-        <mu-drawer :open="open" @close="toggle()">
+        <mu-drawer :open="open" @close="toggle()" :docked="docked">
             <mu-appbar title="CG CTF"></mu-appbar>
-            <mu-list @itemClick="docked ? '' : toggle()">
+            <mu-list>
                 <mu-list-item :open="false" title="Challenges" toggleNested>
-                    <a href=""><mu-list-item title="Web" slot="nested"/></a>
-                    <mu-list-item title="Re" slot="nested"/>
-                    <mu-list-item title="Pwn" slot="nested"/>
-                    <mu-list-item title="Crypto" slot="nested"/>
-                    <mu-list-item title="Misc" slot="nested"/>
+                    <mu-list-item title="Web" href="/challenges/Web" slot="nested"/>
+                    <mu-list-item title="Re" href="/challenges/Re" slot="nested"/>
+                    <mu-list-item title="Pwn" href="/challenges/Pwn" slot="nested"/>
+                    <mu-list-item title="Crypto" href="/challenges/Crypto" slot="nested"/>
+                    <mu-list-item title="Misc" href="/challenges/Misc" slot="nested"/>
                 </mu-list-item>
-                <mu-list-item title="Scoreboard"/>
+                <mu-list-item title="Scoreboard" href="/scoreboard" />
                 <mu-divider/>
                 <mu-list-item title="About"/>
                 <mu-list-item title="close" @click="toggle()"/>
@@ -39,7 +39,7 @@
         },
         created() {
             eventHub.$on('drawer.toggle', () => {
-                this.open = !this.open
+                this.toggle(true)
             })
         }
     }

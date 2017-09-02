@@ -17,10 +17,13 @@
 </head>
 <body>
 <div id="app">
-    <app-bar></app-bar>
+    <app-bar :login="{{ Auth::check() ? "true" : "false" }}"></app-bar>
     <drawer></drawer>
+    @if(Auth::check())
+        <tab-bar></tab-bar>
+    @endif
 
-@yield('content')
+    @yield('content')
 </div>
 
 <!-- Scripts -->
