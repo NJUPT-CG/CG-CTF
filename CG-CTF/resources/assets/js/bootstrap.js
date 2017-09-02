@@ -1,4 +1,4 @@
-window.rootURL = "http://ctf.dev/";
+window.rootURL = "http://localhost/CG-CTF/CG-CTF/public/";
 
 window.routeList =  new Map();
 window.routeList.set('web', rootURL+"challenges/Web");
@@ -10,6 +10,8 @@ window.routeList.set('scoreBoard', rootURL+"scoreboard");
 window.routeList.set('about', rootURL+"about");
 window.routeList.set('login', rootURL+"login");
 window.routeList.set('logout', rootURL+"logout");
+window.routeList.set('score', rootURL+"score");
+window.routeList.set('register', rootURL+"register");
 
 window._ = require('lodash');
 
