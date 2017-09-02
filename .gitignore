@@ -11,3 +11,11 @@
 /CG-CTF/Homestead.yaml
 /CG-CTF/npm-debug.log
 /CG-CTF/.env
+CG-CTF/vendor/autoload.php
+CG-CTF/vendor/autoload.php
+CG-CTF/vendor/autoload.php
+CG-CTF/vendor/composer/autoload_classmap.php
+CG-CTF/vendor/composer/autoload_real.php
+CG-CTF/vendor/composer/autoload_static.php
+CG-CTF/vendor/composer/ClassLoader.php
+CG-CTF/vendor/composer/LICENSE
