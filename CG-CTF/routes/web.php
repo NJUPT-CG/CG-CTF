@@ -43,9 +43,4 @@ Route::get('/createadmin',function(){
 
 Route::get('challenges/{fields}','ChallengeController@showChallenges');   //展示对应版块题目
 
-
 Route::post('submitflag/{id}', 'ChallengeController@submitFlag');
-
-Route::get('/test', function () {
-    return factory(App\challenge::class, 100)->create();
-});

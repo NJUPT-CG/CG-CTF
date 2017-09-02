@@ -7,7 +7,7 @@
 	ul ,li{
 		list-style: none;
 	}
-	#menu li{
+	#menu li{`
 		float:left;
 		color:red;
 		margin:6%;
