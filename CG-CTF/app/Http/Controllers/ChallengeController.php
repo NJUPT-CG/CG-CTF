@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\challenge;
@@ -99,10 +101,24 @@ class ChallengeController extends Controller
 
     }
 
-    public function ShowScoreBoard(){
+    public function ShowScoreBoard(Request $request){
 
-        $users=User::scoreboard();
-        return view('scoreboard',['users'=>$users]);
+        $users=User::scoreboard()->toArray();
+        $perPage = 50;
+        if ($request->has('page')) {
+        $current_page = $request->input('page');
+        $current_page = $current_page <= 0 ? 1 :$current_page;
+        } else {
+             $current_page = 1;
+        }
+          $item = array_slice($users, ($current_page-1)*$perPage, $perPage); //注释1
+         $total = count($users);
+         $paginator =new LengthAwarePaginator($item, $total, $perPage, $current_page, [
+        'path' => Paginator::resolveCurrentPath(), //注释2
+        'pageName' => 'page',
+         ]);
+        $userlist = $paginator->toArray()['data'];
+        return view('scoreboard',['users'=>$userlist,'paginator'=>$paginator]);
     }
 
     public function ShowScore(){

@@ -15,7 +15,7 @@
        @foreach($users as $user)
     <tbody>
       <tr>
-         <td>{{$loop->iteration}}</td>
+         <td>{{$user['rank']}}</td>
          <td>{{$user['name']}}</td>
 		  <td>{{$user['totalScore']}}</td>
 		  <td>{{$user['lastsubtime']}}</td>
@@ -24,5 +24,6 @@
        @endforeach
     @endif
 </table>
+{{ $paginator->render() }}
 </div>
 @endsection
