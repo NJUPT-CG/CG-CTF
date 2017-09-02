@@ -1,4 +1,8 @@
-window.rootURL = "http://localhost/CG-CTF/CG-CTF/public/";
+
+//window.rootURL = "http://localhost/CG-CTF/CG-CTF/public/";
+
+let rootURL = document.head.querySelector('meta[name="root-url"]').content;
+rootURL = rootURL.endsWith('/') ? rootURL : rootURL+"/";
 
 window.routeList =  new Map();
 window.routeList.set('web', rootURL+"challenges/Web");
