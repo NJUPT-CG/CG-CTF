@@ -22,3 +22,21 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(\App\challenge::class, function (Faker\Generator $faker) {
+    $type = ['Web', 'Re', 'Pwn', 'Crypto', 'Misc'];
+
+    return [
+        'title' => $faker->realText($maxNbChars = 20),
+        'class' => $faker->randomElement($type),
+        'description' => $faker->realText($maxNbChars = 100),
+        'url' => $faker->url,
+        'flag' => 1,
+        'info' => $faker->realText($maxNbChars = 20),
+        'score' => $faker->numberBetween($min = 1, $max = 100),
+    ];
+});
+
+//$factory->define(\App\challenge::class, function (Faker\Generator $faker) {
+//    return ['flag1' => $faker->sha256];
+//});
