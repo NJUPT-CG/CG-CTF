@@ -5,3 +5,18 @@ A Simple CTF Practice &amp; Competition Platform
 请在本地用composer create-project --prefer-dist laravel/laravel CG-CTF 
 
 创建一个新的项目,覆盖掉克隆下来的项目文件,这样应该可以了吧,注意ignore掉vendor下的所有文件,再次同步时,记得discard掉本地的change.
+
+访问 "/test" 来生成100个测试用户
+
+访问 "/createChallenges" 来生成100个测试用题
+
+### 前端
+
+需要安装依赖，嫌太慢可以挂梯子，或者用cnpm、yarn
+```
+npm install
+```
+
+之后同步前端的样式需要运行
+```
+npm run dev

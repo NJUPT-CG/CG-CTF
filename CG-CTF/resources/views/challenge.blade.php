@@ -22,20 +22,6 @@
             //1000是多久被隐藏，单位毫秒
         </script>
     @endif
-    <ul class="nav nav-tabs">
-        <li role="presentation" class="{{$class=='Web'? 'active':''}}" id="Web"><a
-                    href="{{url('challenges/Web')}}">Web</a></li>
-        <li role="presentation" class="{{$class=='Re'? 'active':''}}" id="Re"><a href="{{url('challenges/Re')}}">Re</a>
-        </li>
-        <li role="presentation" class="{{$class=='Pwn'? 'active':''}}" id="Pwn"><a
-                    href="{{url('challenges/Pwn')}}">Pwn</a></li>
-        <li role="presentation" class="{{$class=='Crypto'? 'active':''}}" id="Crypto"><a
-                    href="{{url('challenges/Crypto')}}">Crypto</a></li>
-        <li role="presentation" class="{{$class=='Misc'? 'active':''}}" id="Misc"><a href="{{url('challenges/Misc')}}">Misc</a>
-        </li>
-        <li role="presentation"><a href="#">About</a></li>
-    </ul>
-    <br>
     <div class="container">
         <div id="challenge-container" class="row">
             <div class="col-md-12">

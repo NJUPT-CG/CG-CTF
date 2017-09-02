@@ -21,6 +21,7 @@ Vue.use(MuseUI);
 
 Vue.component('drawer', require('./components/Drawer.vue'));
 Vue.component('appBar', require('./components/AppBar.vue'));
+Vue.component('tabBar', require('./components/TabBar.vue'));
 
 const app = new Vue({
     el: '#app'
