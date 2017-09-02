@@ -1,11 +1,11 @@
 <template>
     <div id="tabs">
         <mu-tabs :value="activeTab" @change="handleTabChange">
-            <mu-tab value="Web" href="/challenges/Web" title="Web"/>
-            <mu-tab value="Re" href="/challenges/Re" title="Re"/>
-            <mu-tab value="Pwn" href="/challenges/Pwn" title="Pwn"/>
-            <mu-tab value="Crypto" href="/challenges/Crypto" title="Crypto"/>
-            <mu-tab value="Misc" href="/challenges/Misc" title="Misc"/>
+            <mu-tab value="Web" :href="routes.get('web')" title="Web"/>
+            <mu-tab value="Re" :href="routes.get('re')" title="Re"/>
+            <mu-tab value="Pwn" :href="routes.get('pwn')" title="Pwn"/>
+            <mu-tab value="Crypto" :href="routes.get('crypto')" title="Crypto"/>
+            <mu-tab value="Misc" :href="routes.get('misc')" title="Misc"/>
         </mu-tabs>
     </div>
 </template>
@@ -17,14 +17,14 @@
         name: "TabBar",
         data() {
             return {
-                activeTab: 'Web'
+                activeTab: 'Web',
+                routes: routeList
             }
         },
         methods: {
             handleTabChange(val) {
                 this.activeTab = val
                 eventHub.$emit('activeTab', this.activeTab)
-                sessionStorage.setItem('activeTab', this.activeTab)
             }
         },
         created() {

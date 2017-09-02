@@ -8,7 +8,7 @@ A Simple CTF Practice &amp; Competition Platform
 
 访问 "/test" 来生成100个测试用户
 
-访问 "/createChallenges" 来生成100个测试用题
+访问 "/createChallenges" 来生成100个测试用题, flag 是 1
 
 ### 前端
 

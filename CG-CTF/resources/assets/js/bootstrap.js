@@ -1,3 +1,15 @@
+window.rootURL = "http://ctf.dev/";
+
+window.routeList =  new Map();
+window.routeList.set('web', rootURL+"challenges/Web");
+window.routeList.set('re', rootURL+"challenges/Re");
+window.routeList.set('pwn', rootURL+"challenges/Pwn");
+window.routeList.set('crypto', rootURL+"challenges/Crypto");
+window.routeList.set('misc', rootURL+"challenges/Misc");
+window.routeList.set('scoreBoard', rootURL+"scoreboard");
+window.routeList.set('about', rootURL+"about");
+window.routeList.set('login', rootURL+"login");
+window.routeList.set('logout', rootURL+"logout");
 
 window._ = require('lodash');
 

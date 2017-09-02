@@ -7,6 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="root-url" content="{{ env("APP_URL") }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -14,12 +15,10 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     @yield('style')
+
 </head>
 <body>
 <div id="app">
-    {{ env('APP_URL') }}
-    {{ env('APP_NAME') }}
-
     <app-bar :login="{{ Auth::check() ? "true" : "false" }}"></app-bar>
     <drawer></drawer>
     @if(!Request::is('login'))
