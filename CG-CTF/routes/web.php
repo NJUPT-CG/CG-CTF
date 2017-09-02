@@ -45,3 +45,7 @@ Route::get('challenges/{fields}','ChallengeController@showChallenges');   //å±•ç
 
 
 Route::post('submitflag/{id}', 'ChallengeController@submitFlag');
+
+Route::get('/test', function () {
+    return factory(App\challenge::class, 100)->create();
+});
