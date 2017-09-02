@@ -28,10 +28,6 @@
                     return location = '/login'
                 })
             }
-        },
-        created() {
-            console.log(typeof this.loginStatus)
-            console.log(this.loginStatus)
         }
     }
 </script>

@@ -28,7 +28,7 @@
             }
         },
         created() {
-            this.activeTab = sessionStorage.getItem('activeTab') || location.href.split('/')[4]
+            this.activeTab = location.href.split('/challenges/')[1]
         }
     }
 </script>

@@ -17,9 +17,12 @@
 </head>
 <body>
 <div id="app">
+    {{ env('APP_URL') }}
+    {{ env('APP_NAME') }}
+
     <app-bar :login="{{ Auth::check() ? "true" : "false" }}"></app-bar>
     <drawer></drawer>
-    @if(Auth::check())
+    @if(!Request::is('login'))
         <tab-bar></tab-bar>
     @endif
 
