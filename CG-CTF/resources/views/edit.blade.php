@@ -24,11 +24,11 @@
                         <div class="form-group">
                          <label for="class">分类</label>
                          <select class="form-control" id="class" name="class">
-                         <option value="Web">Web</option>
-                         <option value="Re">Re</option>
-                         <option value="Pwn">Pwn</option>
-                         <option value="Crypto">Crypto</option>
-                         <option value="Misc">Misc</option>
+                         <option value="Web" {{ $challenge->class =='Web'?"selected='1'":''}} >Web</option>
+                         <option value="Re"  {{ $challenge->class =='Re'?"selected='1'":''}} >Re</option>
+                         <option value="Pwn"  {{ $challenge->class =='Pwn'?"selected='1'":''}} >Pwn</option>
+                         <option value="Crypto" {{$challenge->class =='Crypto'?"selected='1'":''}} >Crypto</option>
+                         <option value="Misc"  {{ $challenge->class =='Misc'?"selected='1'":''}} >Misc</option>
                          </select>
                         </div>
 
