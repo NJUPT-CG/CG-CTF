@@ -17,6 +17,7 @@ window.routeList.set('logout', rootURL+"logout");
 window.routeList.set('score', rootURL+"score");
 window.routeList.set('register', rootURL+"register");
 window.routeList.set('profile', rootURL+"profile");
+window.routeList.set('create', rootURL+"create");
 
 window._ = require('lodash');
 

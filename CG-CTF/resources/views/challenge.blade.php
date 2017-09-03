@@ -69,6 +69,10 @@
                                 <input type="text" name="flag" placeholder="flag"/>
                             </div>
                             <div class="modal-footer">
+                            @if(App\User::isadmin())
+                            <a href="{{ url('edit/'.$challenge['id']) }}" class="btn btn-success">edit</a>     
+                               <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete{{$challenge['id']}}">delete</button>
+                             @endif
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
@@ -76,6 +80,29 @@
                     </div>
                 </div>
             </div>
+            @if(App\User::isadmin())
+            <div class="modal fade" id="delete{{$challenge['id'] }}" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+               <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">confirm</h4>
+              </div>
+              <div class="modal-body">
+               <p>确认删除吗?&hellip;</p>
+            </div>
+             <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+             <form action="{{ url('delete/'.$challenge['id']) }}" method="POST" style="display: inline;">  
+                   {{ method_field('DELETE') }}
+                   {{ csrf_field() }}
+                   <button type="submit" class="btn btn-danger">delete</button>
+                   </form>  
+             </div>
+         </div><!-- /.modal-content -->
+         </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        @endif
         @endforeach
     @endif
 @endsection

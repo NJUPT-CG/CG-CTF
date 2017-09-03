@@ -7,6 +7,7 @@
             <mu-menu-item v-if="loginStatus" title="logout" @click="logout"/>
             <mu-menu-item v-if="loginStatus" title="score" :href="routes.get('score')"/>
              <mu-menu-item v-if="loginStatus" title="profile" :href="routes.get('profile')" />
+             <mu-menu-item v-if="isadmin" title="newchallenge" :href="routes.get('create')" />
         </mu-icon-menu>
     </mu-appbar>
 </template>
@@ -16,10 +17,11 @@
 
     export default {
         name: "AppBar",
-        props: ["login"],
+        props: ["login","isadmin"],
         data() {
             return {
                 loginStatus: this.login,
+                isadmin :this.isadmin,
                 routes: routeList
             }
         },

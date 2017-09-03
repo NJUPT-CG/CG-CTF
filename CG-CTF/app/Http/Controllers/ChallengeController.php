@@ -70,6 +70,18 @@ class ChallengeController extends Controller
     	}
     }
 
+    public function delete($id){
+        if(User::isadmin()){
+            $challenge=challenge::find($id);
+            $challenge->users()->detach();
+            if($challenge->delete()){
+               return  redirect()->back()->withInput()->withErrors('deleted!');
+            }
+            else return  redirect()->back()->withInput()->withErrors('unknown error!');
+        }
+        else return redirect()->back()->withInput()->withErrors('error!');
+    }
+
     public function showChallenges($fields){             //显示对应板块的题目
         $challengeInfo = challenge::where('class', $fields)->get(['id','title','description','url','info','score']);
         if(Auth::check()){
