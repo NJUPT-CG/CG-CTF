@@ -21,7 +21,7 @@
 <div id="app">
     <app-bar :login="{{ Auth::check() ? "true" : "false" }}"></app-bar>
     <drawer></drawer>
-    @if(!Request::is('login'))
+    @if(Auth::check())
         <tab-bar></tab-bar>
     @endif
 

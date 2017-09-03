@@ -24,6 +24,8 @@ Route::post('/newchallenge', 'ChallengeController@newchallenge');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/edit/{id}', 'ChallengeController@edit');
 Route::post('/editchallenge/{id}', 'ChallengeController@editchallenge');
+Route::get('/profile','UserController@profile');
+Route::post('/ProfileEdit','UserController@ProfileEdit');
 
 // 计分板测试
 Route::get('/scoreboard', 'ChallengeController@ShowScoreBoard');

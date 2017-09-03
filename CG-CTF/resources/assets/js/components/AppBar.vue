@@ -6,6 +6,7 @@
              <mu-menu-item v-if="!loginStatus" title="register" :href="routes.get('register')"/>
             <mu-menu-item v-if="loginStatus" title="logout" @click="logout"/>
             <mu-menu-item v-if="loginStatus" title="score" :href="routes.get('score')"/>
+             <mu-menu-item v-if="loginStatus" title="profile" :href="routes.get('profile')" />
         </mu-icon-menu>
     </mu-appbar>
 </template>

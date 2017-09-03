@@ -3,6 +3,7 @@
 namespace App;
 
 use Hash;
+use Validator;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -86,9 +87,10 @@ class User extends Authenticatable
         //$sorted = $scores->sortBy('lastsubtime')->sortByDesc('totalScore');
         $sorted = $scores->sort(
                     function ($a, $b) {
-                    return strcmp($b['totalScore'], $a['totalScore']) ?:strcmp($a['lastsubtime'], $b['lastsubtime']);
+                    return ($b['totalScore']-$a['totalScore'])?:strcmp($a['lastsubtime'], $b['lastsubtime']);
                      }
         );
+        //echo $sorted;
         $rank=0;
         foreach ($sorted as $sort => $v) {
             $temp = collect($sorted[$sort]);
@@ -96,6 +98,43 @@ class User extends Authenticatable
             $sorted[$sort]=$temp->toArray();
         }
         return $sorted->values();
+    }
+    //修改信息
+    public static function ProfileEdit($id,$userdata){
+        $user=User::where(['id'=>$id,'email'=>$userdata['email']])->first();
+        if($user){
+        // $name=$userdata['name'];
+        // $email=$userdata['email'];
+        // $password=$userdata['password'];
+        // $password_confirmation=$userdata['password_confirmation'];
+        $data=$userdata->all();
+        if($userdata['name']===Auth::user()->name){
+            $v=Validator::make($data, [
+            'password' => 'required|string|min:6|confirmed',
+            'password_confirmation'=>'same:password',
+        ]);
+        }
+        else{    
+        $v=Validator::make($data, [
+            'name' => 'required|string|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            'password_confirmation'=>'same:password',
+        ]);
+        }
+        if($v->fails()){
+            return redirect()->to('profile')->withErrors($v->errors());
+        }
+        else{
+            $user->name=$userdata['name'];
+            $user->password=bcrypt($userdata['password']);
+            if ($user->save()){
+            return redirect()->to('profile')->withErrors(['editsuccess'=>'Edit Succseefully!']);
+            }
+            else return redirect()->to('profile')->withErrors(['editsuccess'=>'Unknown Error!']);
+        }
+
+    }
+        else return redirect()->to('profile')->withErrors(['email'=>'what did you do?']);
     }
 /*
     public function finishChallenge($id){

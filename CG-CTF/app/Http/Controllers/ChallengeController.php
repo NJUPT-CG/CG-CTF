@@ -96,7 +96,7 @@ class ChallengeController extends Controller
            return  view('challenge', ['challengeInfo'=>$challengeData->values(),'class'=>$fields]); 
         }
                      //根据传递的板块搜索题目信息
-     return view('challenge', ['challengeInfo'=>$challengeInfo,'class'=>$fields]);
+     else return redirect()->route('login');
 
 
     }
