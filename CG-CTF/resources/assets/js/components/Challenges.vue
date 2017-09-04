@@ -66,6 +66,12 @@
             hasData(tab) {
                 return !!this.loadStatus[tab]
             },
+            loadAllData() {
+                let tabs = ['Web', 'Re', 'Pwn', 'Crypto', 'Misc'];
+                for (let tab of tabs) {
+                    this.loadData(tab);
+                }
+            }
         },
         created() {
             let currentTab = location.href.split('/challenges#')[1];
@@ -73,6 +79,9 @@
             eventHub.$on('activeTab', (activeTab) => {
                 this.setActiveTab(activeTab);
             })
+        },
+        mounted() {
+            setTimeout(this.loadAllData(), 5000)
         },
         components: {
             tabBar,
