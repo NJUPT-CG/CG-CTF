@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->text('power')->nullable();
             $table->rememberToken();
             $table->json('finishedchallenge')->nullable();
+            $table->string('api_token', 60)->unique();
             $table->timestamps();
         });
     }

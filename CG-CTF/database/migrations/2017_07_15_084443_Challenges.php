@@ -23,6 +23,7 @@ class Challenges extends Migration
             $table->text('info')->nullable();;     //备注
             $table->integer('score');    //分数
 
+            $table->index('class');
             $table->timestamps();
         });
     }
@@ -34,6 +35,6 @@ class Challenges extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ChallengeS');
+        Schema::dropIfExists('Challenges');
     }
 }

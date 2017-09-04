@@ -7,6 +7,9 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- API Token --}}
+    <meta name="api-token" content="{{ Auth::check() ? "Bearer ".Auth::user()->api_token : ""}}">
+    {{-- APP_URL --}}
     <meta name="root-url" content="{{ env("APP_URL") }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
@@ -21,9 +24,7 @@
 <div id="app">
     <app-bar :login="{{ Auth::check() ? "true" : "false" }}"></app-bar>
     <drawer></drawer>
-    @if(!Request::is('login'))
-        <tab-bar></tab-bar>
-    @endif
+    <challenges :login="{{ Auth::check() ? "true" : "false" }}"></challenges>
 
     @yield('content')
 </div>

@@ -2,10 +2,10 @@
     <mu-appbar title="CG CTF">
         <mu-icon-button @click="drawerToggle" icon="menu" slot="left"/>
         <mu-icon-menu icon="more_vert" slot="right">
-            <mu-menu-item v-if="!loginStatus" title="login" :href="routes.get('login')"/>
-             <mu-menu-item v-if="!loginStatus" title="register" :href="routes.get('register')"/>
-            <mu-menu-item v-if="loginStatus" title="logout" @click="logout"/>
-            <mu-menu-item v-if="loginStatus" title="score" :href="routes.get('score')"/>
+            <mu-menu-item v-if="!login" title="login" :href="routeList.get('login')"/>
+            <mu-menu-item v-if="!login" title="register" :href="routeList.get('register')"/>
+            <mu-menu-item v-if="login" title="logout" @click="logout"/>
+            <mu-menu-item v-if="login" title="score" :href="routeList.get('score')"/>
         </mu-icon-menu>
     </mu-appbar>
 </template>
@@ -16,20 +16,21 @@
     export default {
         name: "AppBar",
         props: ["login"],
-        data() {
-            return {
-                loginStatus: this.login,
-                routes: routeList
-            }
-        },
+        data: () => ({
+            routeList
+        }),
         methods: {
             drawerToggle() {
                 eventHub.$emit('drawer.toggle')
             },
             logout() {
-                axios.post(this.routes.get('logout')).then(() => {
-                    return location = this.routes.get('login')
-                })
+                axios.post(this.routeList.get('logout'))
+                    .then(() => {
+                        return location = this.routeList.get('login')
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
             }
         }
     }

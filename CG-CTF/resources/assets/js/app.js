@@ -22,6 +22,8 @@ Vue.use(MuseUI);
 Vue.component('drawer', require('./components/Drawer.vue'));
 Vue.component('appBar', require('./components/AppBar.vue'));
 Vue.component('tabBar', require('./components/TabBar.vue'));
+Vue.component('challengeCard', require('./components/ChallengeCard.vue'));
+Vue.component('challenges', require('./components/Challenges.vue'));
 
 const app = new Vue({
     el: '#app'

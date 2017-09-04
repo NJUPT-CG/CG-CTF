@@ -38,10 +38,11 @@ Route::get('/createadmin', function () {
         'email' => 'test@test.com',
         'password' => bcrypt('12345678'),
         'power' => bcrypt('admin'),
+        'api_token' => str_random(60)
     ]);
 });
 
-Route::get('challenges/{fields}', 'ChallengeController@showChallenges')->name('challenge');   //展示对应版块题目
+Route::get('challenges', 'ChallengeController@showChallenges')->name('challenge');   //展示对应版块题目
 
 Route::post('submitflag/{id}', 'ChallengeController@submitFlag');
 
