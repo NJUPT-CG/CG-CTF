@@ -6,6 +6,8 @@
             <mu-menu-item v-if="!login" title="register" :href="routeList.get('register')"/>
             <mu-menu-item v-if="login" title="logout" @click="logout"/>
             <mu-menu-item v-if="login" title="score" :href="routeList.get('score')"/>
+            <mu-menu-item v-if="login" title="profile" :href="routeList.get('profile')"/>
+            <mu-menu-item v-if="isadmin" title="newchallenge" :href="routeList.get('create')"/>
         </mu-icon-menu>
     </mu-appbar>
 </template>
@@ -15,7 +17,7 @@
 
     export default {
         name: "AppBar",
-        props: ["login"],
+        props: ["login", "isadmin"],
         data: () => ({
             routeList
         }),

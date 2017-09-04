@@ -34,7 +34,6 @@
 
                                 {{--<p>{{$challenge['title']}}</p><br>--}}
                                 {{--<p>{{$challenge['score'].' pt'}}</p>--}}
-
                             {{--</button>--}}
                         {{--</div>--}}
                     {{--@endforeach--}}

@@ -10,7 +10,6 @@ use App\challenge;
 use App\User;
 use App\challenge_user;
 
-
 class ChallengeController extends Controller
 {
     //
@@ -21,15 +20,12 @@ class ChallengeController extends Controller
         } else return redirect()->route('login');
     }
 
-
     public function newchallenge(Request $data)
     {
         if (User::isadmin()) {
             $data->flash();
             $request = $data->all();
-
             $add = new challenge;
-
             return $add->create(['title' => $request['title'],
                 'class' => $request['class'],
                 'description' => $request['description'],
@@ -46,9 +42,7 @@ class ChallengeController extends Controller
         if (User::isadmin()) {
             $challenge = challenge::find($id);
             return view('edit', ['challenge' => $challenge]);
-
         } else return redirect()->route('login');
-
     }
 
     public function editchallenge($id, Request $data)
@@ -57,7 +51,6 @@ class ChallengeController extends Controller
             $data->flash();
             $request = $data->all();
             $challenge = challenge::find($id);
-
             $challenge->title = $request['title'];
             $challenge->class = $request['class'];
             $challenge->description = $request['description'];
@@ -65,15 +58,25 @@ class ChallengeController extends Controller
             $challenge->flag = $request['flag'];
             //$challenge->info=$request['info'];
             $challenge->score = $request['score'];
-
             if ($challenge->save()) return redirect()->route('login');
             else return view('edit', ['status' => '出现错误']);
-
         }
     }
 
+    public function delete($id)
+    {
+        if (User::isadmin()) {
+            $challenge = challenge::find($id);
+            $challenge->users()->detach();
+            if ($challenge->delete()) {
+                return redirect()->back()->withInput()->withErrors('deleted!');
+            } else return redirect()->back()->withInput()->withErrors('unknown error!');
+        } else return redirect()->back()->withInput()->withErrors('error!');
+    }
+
     public function showChallenges()
-    {             //显示对应板块的题目
+    {
+        //显示对应板块的题目
 //        $challengeInfo = challenge::where('class', $fields)->get(['id', 'title', 'description', 'url', 'info', 'score']);
 //        if (Auth::check()) {
 //            $userid = Auth::id();
@@ -81,13 +84,11 @@ class ChallengeController extends Controller
 //            foreach ($challengeInfo as $challenge) {
 //                $challengeid = $challenge->id;
 //                $issolved = 0;
-//
 //                if (challenge_user::where(['userid' => $userid, 'challengeid' => $challengeid])->first()) {
 //                    $issolved = 1;
 //                } else {
 //                    $issolved = 0;
 //                }
-//
 //                $challengeData->push(array('id' => $challenge->id,
 //                    'title' => $challenge->title,
 //                    'description' => $challenge->description,
@@ -97,15 +98,13 @@ class ChallengeController extends Controller
 //                    'issolved' => $issolved));
 //            }
 //            return view('challenge', ['challengeInfo' => $challengeData->values(), 'class' => $fields]);
-//        }
-//        //根据传递的板块搜索题目信息
-//        return view('challenge', ['challengeInfo' => $challengeInfo, 'class' => $fields]);
+//        } //根据传递的板块搜索题目信息
+//        else return redirect()->route('login');
         return view('challenge');
     }
 
     public function ShowScoreBoard(Request $request)
     {
-
         $users = User::scoreboard()->toArray();
         $perPage = 50;
         if ($request->has('page')) {
@@ -156,9 +155,8 @@ class ChallengeController extends Controller
                 if ($flag === $correctFlag) {        //whether correct
                     challenge_user::create(['userid' => $userid, 'challengeid' => $id]);
                     return redirect()->back()->withInput()->withErrors('correct!');
-
-                } else return redirect()->back()->withInput()->withErrors('wrong!');
-            } else return redirect()->back()->withInput()->withErrors('solved!');
+                } else return redirect()->back()->withInput()->withErrors('wrong!');;
+            } else return redirect()->back()->withInput()->withErrors('solved!');;
         } else return redirect()->route('login');
     }
 }

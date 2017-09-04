@@ -1,17 +1,6 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-    <title>CG-CTF</title>
-
-    <link href="//cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-    <script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-</head>
-    <body>
+@section('content')
     <div class="container">  
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
@@ -24,11 +13,11 @@
                         <div class="form-group">
                          <label for="class">分类</label>
                          <select class="form-control" id="class" name="class">
-                         <option value="Web">Web</option>
-                         <option value="Re">Re</option>
-                         <option value="Pwn">Pwn</option>
-                         <option value="Crypto">Crypto</option>
-                         <option value="Misc">Misc</option>
+                         <option value="Web" {{ $challenge->class =='Web'?"selected='1'":''}} >Web</option>
+                         <option value="Re"  {{ $challenge->class =='Re'?"selected='1'":''}} >Re</option>
+                         <option value="Pwn"  {{ $challenge->class =='Pwn'?"selected='1'":''}} >Pwn</option>
+                         <option value="Crypto" {{$challenge->class =='Crypto'?"selected='1'":''}} >Crypto</option>
+                         <option value="Misc"  {{ $challenge->class =='Misc'?"selected='1'":''}} >Misc</option>
                          </select>
                         </div>
 
@@ -51,5 +40,4 @@
         </div>
     </div>
 </div>  
-</body>  
-</html>  
+@endsection  

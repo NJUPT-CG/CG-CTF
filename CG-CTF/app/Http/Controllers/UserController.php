@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\User;
 class UserController extends Controller
 {
     public function index(){
@@ -26,6 +27,22 @@ class UserController extends Controller
         }
 
     }
+    public function ProfileEdit(Request $userdata){
+        if(Auth::check()){
+            $id=Auth::id();
+            return User::ProfileEdit($id,$userdata);
+        }
+        else return redirect()->route('login');
+    }
+    public function profile(){
+        if(Auth::check()){
+            $id=Auth::id();
+            $userdata=User::find($id);
+            return view('profile',['userdata'=>$userdata]);
+        }
+        else return redirect()->route('login');
+    }
+
     public function logout(){
         Auth::logout();
         return view('CG-CTF');
