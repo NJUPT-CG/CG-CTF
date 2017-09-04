@@ -67,8 +67,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'power' => bcrypt('user'),
+            'api_token' => str_random(60)
         ]);
     }
-
-  
 }

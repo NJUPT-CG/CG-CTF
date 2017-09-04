@@ -35,7 +35,6 @@
         data: () => ({
             activeTab: 'Web',
             loadStatus: {},
-            questions: new Map(),
             Web: [],
             Re: [],
             Pwn: [],
@@ -66,10 +65,28 @@
             hasData(tab) {
                 return !!this.loadStatus[tab]
             },
-            loadAllData() {
+            justWaitForACoffee() {
+                return new Promise(resolve => {
+                    setTimeout(() => resolve('☕'), 2000); // it takes 2 seconds to make coffee
+                });
+            },
+            async loadAllData() {
                 let tabs = ['Web', 'Re', 'Pwn', 'Crypto', 'Misc'];
-                for (let tab of tabs) {
-                    this.loadData(tab);
+                try {
+                    const coffee = await this.justWaitForACoffee();
+                    // then we grab some data
+                    let promises = [];
+                    for (let tab of tabs) {
+                        promises.push(axios(`${apiRoot}challenges?class=${tab}`))
+                    }
+                    // await all promises to come back and destructure the result into their own variables
+                    const [webResponse, reResponse, pwnResponse, cryptoResponse, MiscResponse] = await Promise.all(promises);
+                    [this.Web, this.Re, this.Pwn, this.Crypto, this.Misc] = [webResponse.data, reResponse.data, pwnResponse.data, cryptoResponse.data, MiscResponse.data];
+                    for (let tab of tabs) {
+                        this.loadStatus[tab] = true;
+                    }
+                } catch (error) {
+                    console.error(error);
                 }
             }
         },
@@ -81,7 +98,7 @@
             })
         },
         mounted() {
-            setTimeout(this.loadAllData(), 5000)
+            this.loadAllData()
         },
         components: {
             tabBar,
