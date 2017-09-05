@@ -111,7 +111,7 @@ class ChallengeController extends Controller
         } else return redirect()->route('login');
     }
 
-    //  api
+    //  api part
 
     /**
      * api method
@@ -139,10 +139,14 @@ class ChallengeController extends Controller
      */
     public function getQuestionDetail(challenge $challenge)
     {
+        $user = Auth::guard('api')->user();
+        $power = !!$user ? Hash::check('admin', $user->power) : false;
+
         return [
             'description' => $challenge->description,
             'url' => $challenge->url,
-            'class' => $challenge->class
+            'class' => $challenge->class,
+            'power' => $power
         ];
     }
 

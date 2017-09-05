@@ -71,8 +71,13 @@
                 });
             },
             async loadAllData() {
-                let tabs = ['Web', 'Re', 'Pwn', 'Crypto', 'Misc'];
                 try {
+                    let tabs = ['Web', 'Re', 'Pwn', 'Crypto', 'Misc'];
+                    let currentTab = location.href.split('/challenges#')[1];
+                    tabs = tabs.filter(tab => tab !== currentTab);
+                    console.log(this.loadStatus);
+                    console.log(tabs);
+
                     const coffee = await this.justWaitForACoffee();
                     // then we grab some data
                     let promises = [];
@@ -80,8 +85,11 @@
                         promises.push(axios(`${apiRoot}challenges?class=${tab}`))
                     }
                     // await all promises to come back and destructure the result into their own variables
-                    const [webResponse, reResponse, pwnResponse, cryptoResponse, MiscResponse] = await Promise.all(promises);
-                    [this.Web, this.Re, this.Pwn, this.Crypto, this.Misc] = [webResponse.data, reResponse.data, pwnResponse.data, cryptoResponse.data, MiscResponse.data];
+                    let responses = [];
+                    responses = await Promise.all(promises);
+                    for (let i = 0; i < responses.length; i++) {
+                        this[tabs[i]] = responses[i].data
+                    }
                     for (let tab of tabs) {
                         this.loadStatus[tab] = true;
                     }
@@ -95,7 +103,11 @@
             this.setActiveTab(currentTab);
             eventHub.$on('activeTab', (activeTab) => {
                 this.setActiveTab(activeTab);
-            })
+            });
+            eventHub.$on('challenge.delete', id => {
+               let type = this.activeTab;
+               this[type] = this[type].filter(item => item.id !== id)
+            });
         },
         mounted() {
             this.loadAllData()

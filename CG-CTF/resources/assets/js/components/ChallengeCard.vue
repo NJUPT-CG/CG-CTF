@@ -1,5 +1,5 @@
 <template>
-    <div class="challenge-card">
+    <div class="challenge-card" v-if="show">
         <mu-paper class="challenge-item" :zDepth="1">
             <mu-appbar :title="challenge.title"/>
             <mu-float-button icon="add" mini @click="open"/>
@@ -21,8 +21,8 @@
                 <mu-text-field label="FLAG" v-model="flagInput" labelFloat/>
             </mu-card>
 
-            <mu-flat-button slot="actions" :href="'/edit/' + challenge.id" primary label="编辑"/>
-            <mu-flat-button slot="actions" @click="deleteChallenge" primary label="删除"/>
+            <mu-flat-button v-if="challenge.power" slot="actions" :href="'/edit/' + challenge.id" primary label="编辑"/>
+            <mu-flat-button v-if="challenge.power" slot="actions" @click="deleteChallenge" primary label="删除"/>
             <mu-flat-button slot="actions" @click="close" primary label="取消"/>
             <mu-flat-button slot="actions" primary @click="submitFlag" label="提交"/>
         </mu-dialog>
@@ -34,6 +34,8 @@
 </template>
 
 <script>
+    import eventHub from '../eventHub'
+
     export default {
         name: "challengeCard",
         props: ['challengeBaseInfo'],
@@ -44,6 +46,7 @@
             flagInput: null,
             result: "false",
             submitStat: false,
+            show: true
         }),
         created() {
             this.challenge = this.challengeBaseInfo;
@@ -56,6 +59,7 @@
                             this.challenge = Object.assign(this.challenge, response.data);
                             this.flagInput = null;
                             this.dialog = true;
+                            console.log(this.challenge)
                         })
                         .catch((error) => {
                             console.log(error)
@@ -87,6 +91,8 @@
                     })
             },
             deleteChallenge() {
+                let id = this.challenge.id;
+
                 axios.delete(`${apiRoot}challenge/${this.challenge.id}`)
                     .then(response => {
                         if (typeof (response.data) !== 'boolean') {
@@ -95,8 +101,13 @@
                             this.submitStat = false
                         } else {
                             this.result = response.data ? '删除成功' : '删除失败';
-                            this.submitStat = true
+                            this.submitStat = response.data;
+                            if (response.data) {
+                                this.close();
+                                this.show = false;
+                            }
                         }
+                        eventHub.$emit('challenge.delete', id);
                         this.showPopup()
                     })
                     .catch(() => {
