@@ -22,7 +22,6 @@
 </head>
 <body>
 <div id="app">
-
     <app-bar :login="{{ Auth::check() ? "true" : "false" }}"
              :isadmin="{{ App\User::isadmin() ? 'true':'false'}}"></app-bar>
     <drawer></drawer>

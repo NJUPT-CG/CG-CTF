@@ -38,7 +38,7 @@ Route::get('/score', 'ChallengeController@ShowScore');
 Route::get('/createadmin', function () {
     return App\User::create([
         'name' => 'test',
-        'email' => 'test@test.com',
+        'email' => 'admin@test.com',
         'password' => bcrypt('12345678'),
         'power' => bcrypt('admin'),
         'api_token' => str_random(60)

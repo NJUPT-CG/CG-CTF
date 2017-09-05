@@ -20,7 +20,8 @@ let routes = [
     'score',
     'register',
     'profile',
-    'create'
+    'create',
+    'edit',
 ];
 
 let hashRoutesMap = (routes, routeList) => {
