@@ -31,7 +31,7 @@
 
     export default {
         name: "Challenges",
-        props: ['login'],
+        props: ['login','isadmin'],
         data: () => ({
             activeTab: 'Web',
             loadStatus: {},
