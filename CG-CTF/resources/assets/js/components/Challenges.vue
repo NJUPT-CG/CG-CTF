@@ -43,11 +43,7 @@
         }),
         methods: {
             loadData(tab) {
-                axios.get(`${apiRoot}challenges?class=${tab}`, {
-                    params: {
-                        class: tab
-                    }
-                })
+                axios.get(`${apiRoot}challenges?class=${tab}`)
                     .then((response) => {
                         this[tab] = response.data;
                         this.loadStatus[tab] = true;
@@ -75,8 +71,6 @@
                     let tabs = ['Web', 'Re', 'Pwn', 'Crypto', 'Misc'];
                     let currentTab = location.href.split('/challenges#')[1];
                     tabs = tabs.filter(tab => tab !== currentTab);
-                    console.log(this.loadStatus);
-                    console.log(tabs);
 
                     const coffee = await this.justWaitForACoffee();
                     // then we grab some data

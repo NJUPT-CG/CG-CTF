@@ -123,9 +123,20 @@ class ChallengeController extends Controller
      */
     public function getQuestionsBelongsToClass(Request $request)
     {
-        return challenge::where('class', $request->get('class'))
+        $challenges = challenge::where('class', $request->get('class'))
             ->select('id', 'title', 'score')
             ->get();
+
+        $user = Auth::guard('api')->user();
+
+        if (!!$user) {
+            $challenges->map(function ($challenge) use ($user){
+                $challenge->passed = $user->challengePassed($challenge->id);
+                return $challenge;
+            });
+        }
+
+        return $challenges;
     }
 
 

@@ -5,6 +5,7 @@
             <mu-float-button icon="add" mini @click="open"/>
             <mu-card-actions>
                 <mu-flat-button :label="challenge.score + 'pt'"/>
+                <mu-flat-button v-if="challenge.passed" class="passed" label="passed"/>
             </mu-card-actions>
         </mu-paper>
 
@@ -80,7 +81,13 @@
                             //  return 'already passed', so submit status is true
                             this.submitStat = true;
                         } else {
-                            this.result = response.data ? '成功！' : '失败！';
+
+                            if (response.data) {
+                                this.result = '成功！';
+                                this.challenge.passed = true
+                            } else {
+                                this.result = '失败！';
+                            }
                             this.submitStat = response.data
                         }
                         this.showPopup()
