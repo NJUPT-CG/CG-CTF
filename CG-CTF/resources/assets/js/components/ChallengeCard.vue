@@ -17,7 +17,7 @@
                     {{ challenge.description }}
                 </mu-card-text>
                 <mu-card-actions>
-                    <mu-flat-button label="题目地址" @click="reference"/>
+                    <mu-flat-button v-if="challenge.url" label="题目地址" @click="reference"/>
                 </mu-card-actions>
                 <mu-text-field label="FLAG" v-model="flagInput" labelFloat/>
             </mu-card>

@@ -68,12 +68,12 @@ window.Vue = require('vue');
  * code may be modified to fit the specific needs of your application.
  */
 
-// try {
-//     window.$ = window.jQuery = require('jquery');
-//
-//     require('bootstrap-sass');
-// } catch (e) {
-// }
+try {
+    window.$ = window.jQuery = require('jquery');
+
+    require('bootstrap-sass');
+} catch (e) {
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
