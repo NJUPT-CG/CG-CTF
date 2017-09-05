@@ -21,7 +21,7 @@
                 </mu-card-actions>
                 <mu-text-field label="FLAG" v-model="flagInput" labelFloat/>
             </mu-card>
-            <mu-flat-button v-if="challenge.power" slot="actions" :href="'/edit/' + challenge.id" primary label="编辑"/>
+            <mu-flat-button v-if="challenge.power" slot="actions" :href="routeList.get('edit') +'/' + challenge.id" primary label="编辑"/>
             <mu-flat-button v-if="challenge.power" slot="actions" @click="deleteChallenge" primary label="删除"/>
             <mu-flat-button slot="actions" @click="close" primary label="取消"/>
             <mu-flat-button slot="actions" primary @click="submitFlag" label="提交"/>
