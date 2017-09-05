@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\challenge;
+use App\challenge_user;
+use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\challenge;
-use App\User;
-use App\challenge_user;
+use Illuminate\Support\Facades\Hash;
 
 class ChallengeController extends Controller
 {
@@ -76,30 +77,6 @@ class ChallengeController extends Controller
 
     public function showChallenges()
     {
-        //显示对应板块的题目
-//        $challengeInfo = challenge::where('class', $fields)->get(['id', 'title', 'description', 'url', 'info', 'score']);
-//        if (Auth::check()) {
-//            $userid = Auth::id();
-//            $challengeData = collect([]);
-//            foreach ($challengeInfo as $challenge) {
-//                $challengeid = $challenge->id;
-//                $issolved = 0;
-//                if (challenge_user::where(['userid' => $userid, 'challengeid' => $challengeid])->first()) {
-//                    $issolved = 1;
-//                } else {
-//                    $issolved = 0;
-//                }
-//                $challengeData->push(array('id' => $challenge->id,
-//                    'title' => $challenge->title,
-//                    'description' => $challenge->description,
-//                    'url' => $challenge->url,
-//                    'info' => $challenge->info,
-//                    'score' => $challenge->score,
-//                    'issolved' => $issolved));
-//            }
-//            return view('challenge', ['challengeInfo' => $challengeData->values(), 'class' => $fields]);
-//        } //根据传递的板块搜索题目信息
-//        else return redirect()->route('login');
         return view('challenge');
     }
 
@@ -134,29 +111,97 @@ class ChallengeController extends Controller
         } else return redirect()->route('login');
     }
 
-    /*
-        public function showChallengeDetail($id)
-        {
-            if (Auth::check()){
-                $challengeInfo = challenge::find($id);
-                return view('challengedetail', ['challenge'=>$challengeInfo]);
-            }
-            else return redirect()->route('login');
-        }
-    */
-    public function submitFlag($id, Request $data)
+    //  api
+
+    /**
+     * api method
+     *
+     * get questions belongs to a class
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function getQuestionsBelongsToClass(Request $request)
     {
-        $data->flash();
-        $flag = $data['flag'];
-        if (Auth::check()) {             //whether login
-            $userid = Auth::id();
-            if (!challenge_user::where(['userid' => $userid, 'challengeid' => $id])->first()) {                      //whether finished
-                $correctFlag = challenge::find($id)->flag;
-                if ($flag === $correctFlag) {        //whether correct
-                    challenge_user::create(['userid' => $userid, 'challengeid' => $id]);
-                    return redirect()->back()->withInput()->withErrors('correct!');
-                } else return redirect()->back()->withInput()->withErrors('wrong!');;
-            } else return redirect()->back()->withInput()->withErrors('solved!');;
-        } else return redirect()->route('login');
+        return challenge::where('class', $request->get('class'))
+            ->select('id', 'title', 'score')
+            ->get();
+    }
+
+
+    /**
+     * api method
+     *
+     * get question detail
+     *
+     * @param challenge $challenge
+     * @return array
+     */
+    public function getQuestionDetail(challenge $challenge)
+    {
+        return [
+            'description' => $challenge->description,
+            'url' => $challenge->url,
+            'class' => $challenge->class
+        ];
+    }
+
+    /**
+     * api method
+     *
+     * validate flag
+     *
+     * @param challenge $challenge
+     * @param Request $request
+     * @return string
+     */
+    public function submitFlag(challenge $challenge, Request $request)
+    {
+        $user = Auth::guard('api')->user();
+
+        if ($user->challengePassed($challenge->id)) {
+            return 'Already passed';
+        }
+
+        if ($challenge->flag === $request->get('flag')) {
+            challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
+            return 'true';
+        }
+        return 'false';
+    }
+
+    /**
+     * api method
+     *
+     * delete challenge
+     *
+     * @param challenge $challenge
+     * @return string
+     */
+    public function deleteChallenge(challenge $challenge)
+    {
+        $user = Auth::guard('api')->user();
+
+        if (self::isAdmin($user->power)) {
+            // 解除对应关系
+            $challenge->users()->detach();
+            // 删除
+            return $challenge->delete() ? 'true' : 'false';
+        } else {
+            // 需要管理员权限
+            return 'Administrator permission is required';
+        }
+    }
+
+
+    /**
+     * 判断管理员权限
+     *
+     * @param $power
+     * @return mixed
+     */
+    public static function isAdmin($power)
+    {
+        return Hash::check('admin', $power);
     }
 }

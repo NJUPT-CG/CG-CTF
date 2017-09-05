@@ -43,7 +43,7 @@
         }),
         methods: {
             loadData(tab) {
-                axios.get(`${apiRoot}challenges`, {
+                axios.get(`${apiRoot}challenges?class=${tab}`, {
                     params: {
                         class: tab
                     }

@@ -21,10 +21,10 @@
                 <mu-text-field label="FLAG" v-model="flagInput" labelFloat/>
             </mu-card>
 
-            <mu-flat-button slot="actions" @click="close" :href="'/edit/' + challenge.id" primary label="编辑"/>
-            <mu-flat-button slot="actions" @click="close" primary label="删除"/>
+            <mu-flat-button slot="actions" :href="'/edit/' + challenge.id" primary label="编辑"/>
+            <mu-flat-button slot="actions" @click="deleteChallenge" primary label="删除"/>
             <mu-flat-button slot="actions" @click="close" primary label="取消"/>
-            <mu-flat-button slot="actions" primary @click="submit()" label="提交"/>
+            <mu-flat-button slot="actions" primary @click="submitFlag" label="提交"/>
         </mu-dialog>
         <mu-popup position="top" :overlay="false" :class="{ 'popup-success': submitStat }"
                   popupClass="demo-popup-top" :open="topPopup">
@@ -68,14 +68,15 @@
             close() {
                 this.dialog = false
             },
-            submit() {
+            submitFlag() {
                 axios.post(`${apiRoot}challenge/${this.challenge.id}`, {'flag': this.flagInput})
                     .then(response => {
                         if (typeof(response.data) !== 'boolean') {
                             this.result = response.data;
-                            this.submitStat = false;
+                            //  return 'already passed', so submit status is true
+                            this.submitStat = true;
                         } else {
-                            this.result = response.data ? '成功！' : '我最失败！';
+                            this.result = response.data ? '成功！' : '失败！';
                             this.submitStat = response.data
                         }
                         this.showPopup()
@@ -83,6 +84,24 @@
                     .catch(() => {
                         this.result = 'Please Login';
                         this.showPopup()
+                    })
+            },
+            deleteChallenge() {
+                axios.delete(`${apiRoot}challenge/${this.challenge.id}`)
+                    .then(response => {
+                        if (typeof (response.data) !== 'boolean') {
+                            this.result = response.data;
+                            // return Administrator permission is required, so submit status is false
+                            this.submitStat = false
+                        } else {
+                            this.result = response.data ? '删除成功' : '删除失败';
+                            this.submitStat = true
+                        }
+                        this.showPopup()
+                    })
+                    .catch(() => {
+                        this.result = 'Please login';
+                        this.showPopup();
                     })
             },
             reference() {
