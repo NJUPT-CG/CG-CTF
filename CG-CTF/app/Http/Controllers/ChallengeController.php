@@ -131,11 +131,15 @@ class ChallengeController extends Controller
             ->select('id', 'title', 'score')
             ->get();
 
-        $user = Auth::guard('api')->user();
+        foreach ($challenges as $challenge => $v) {
+             $challenges[$challenge]->solvers = $challenges[$challenge]->users()->count();
+        }
 
+        $user = Auth::guard('api')->user();
         if (!!$user) {
             $challenges->map(function ($challenge) use ($user){
                 $challenge->passed = $user->challengePassed($challenge->id);
+                //$challenge->solvers = $challenge->users()->count();
                 return $challenge;
             });
         }

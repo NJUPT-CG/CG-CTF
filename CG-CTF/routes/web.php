@@ -35,25 +35,10 @@ Route::get('/score', 'ChallengeController@ShowScore');
 
 Route::get('about',function(){return view('about');});
 
-//用于临时创建管理员,测试用的.
-Route::get('/createadmin', function () {
-    return App\User::create([
-        'name' => 'test',
-        'email' => 'admin@test.com',
-        'password' => bcrypt('12345678'),
-        'power' => bcrypt('admin'),
-        'api_token' => str_random(60)
-    ]);
-});
+
 
 Route::get('challenges', 'ChallengeController@showChallenges')->name('challenge');   //展示对应版块题目
 
 Route::post('submitflag/{id}', 'ChallengeController@submitFlag');
 
-Route::get('/test', function () {
-    return factory(App\User::class, 100)->create();
-});
-
-Route::get('/createChallenges', function () {
-    return factory(App\challenge::class, 100)->create();
-});
+Route::get('/test', 'ChallengeController@getQuestionsBelongsToClass');
