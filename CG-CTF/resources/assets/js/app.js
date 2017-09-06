@@ -13,10 +13,10 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+import 'babel-polyfill'
 import MuseUI from 'muse-ui';
 import 'muse-ui/dist/muse-ui.css';
 import 'muse-ui/dist/theme-carbon.css'; // 使用 carbon 主题
-import 'babel-polyfill'
 
 Vue.use(MuseUI);
 
