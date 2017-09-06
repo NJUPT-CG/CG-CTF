@@ -13,8 +13,8 @@
             <mu-card>
                 <mu-card-title :subTitle="challenge.class + ' ' + challenge.score + 'pt'"/>
                 <mu-divider/>
-                <mu-card-text>
-                    {{ challenge.description }}
+                <mu-card-text v-html="challenge.description">
+
                 </mu-card-text>
                 <mu-card-actions>
                     <mu-flat-button v-if="challenge.url" label="题目地址" @click="reference"/>
@@ -54,10 +54,11 @@
         },
         methods: {
             open() {
-                if (!this.challenge.description) {
+                if (!this.challenge.class) {
                     axios.get(`${apiRoot}challenge/detail/${this.challenge.id}`)
                         .then(response => {
                             this.challenge = Object.assign(this.challenge, response.data);
+                            this.challenge.description = window.md.render(this.challenge.description);
                             this.flagInput = null;
                             this.dialog = true;
                             console.log(this.challenge)

@@ -52,6 +52,8 @@ routeList = mapRoutes(routes);
 
 window.routeList = routeList;
 
+window.md = require('markdown-it')();
+
 window._ = require('lodash');
 
 /**
