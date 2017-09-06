@@ -139,7 +139,7 @@ class ChallengeController extends Controller
         if (!!$user) {
             $challenges->map(function ($challenge) use ($user){
                 $challenge->passed = $user->challengePassed($challenge->id);
-                //$challenge->solvers = $challenge->users()->count();
+                $challenge->solvers = $challenge->users()->count();
                 return $challenge;
             });
         }
