@@ -27,7 +27,7 @@ class ChallengeController extends Controller
             $data->flash();
             $request = $data->all();
             $add = new challenge;
-            return $add->create(['title' => $request['title'],
+            $r=$add->create(['title' => $request['title'],
                 'class' => $request['class'],
                 'description' => $request['description'],
                 'url' => $request['url'],
@@ -35,7 +35,10 @@ class ChallengeController extends Controller
                 //'info'=>$request['info'],
                 'score' => $request['score'],
             ]);
+            if($r) return redirect()->route('home');
+            else return view('create', ['status' => '出现错误']);
         }
+        else return redirect()->route('login');
     }
 
     public function edit($id)
@@ -62,6 +65,7 @@ class ChallengeController extends Controller
             if ($challenge->save()) return redirect()->route('login');
             else return view('edit', ['status' => '出现错误']);
         }
+        else return redirect()->route('login');
     }
 
     public function delete($id)

@@ -33,6 +33,7 @@ Route::get('/scoreboard', 'ChallengeController@ShowScoreBoard');
 
 Route::get('/score', 'ChallengeController@ShowScore');
 
+Route::get('about',function(){return view('about');});
 
 //用于临时创建管理员,测试用的.
 Route::get('/createadmin', function () {
