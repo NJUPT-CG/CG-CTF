@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
 // 获取分类所有试题
 Route::get('/challenges', 'ChallengeController@getQuestionsBelongsToClass');
@@ -28,3 +28,6 @@ Route::post('/challenge/{challenge}', 'ChallengeController@submitFlag')->middlew
 
 // 删除challenge
 Route::delete('/challenge/{challenge}', 'ChallengeController@deleteChallenge')->middleware('auth:api');
+
+// 获取已解决的用户信息
+Route::get('/challenge/solvers/{challenge}', 'ChallengeController@getSolvers');

@@ -5,29 +5,48 @@
             <mu-float-button icon="add" mini @click="open"/>
             <mu-card-actions>
                 <mu-flat-button :label="challenge.score + 'pt'"/>
-                <mu-flat-button v-if="challenge.passed" class="passed" label="passed"/>
+                <mu-flat-button v-if="challenge.passed" class="passed" label="passed" @click="showSolvers"/>
             </mu-card-actions>
         </mu-paper>
 
         <mu-dialog v-if="dialog" :open="dialog" :title="challenge.title" @close="close">
             <mu-card>
+                <mu-card-actions class="solvers-wrapper">
+                    <mu-flat-button :label="'solvers: ' + challenge.solversCount" @click="showSolvers"/>
+                </mu-card-actions>
                 <mu-card-title :subTitle="challenge.class + ' ' + challenge.score + 'pt'"/>
                 <mu-divider/>
-                <mu-card-text v-html="challenge.description">
-
-                </mu-card-text>
+                <mu-card-text v-html="challenge.description"></mu-card-text>
                 <mu-card-actions>
                     <mu-flat-button v-if="challenge.url" label="题目地址" @click="reference"/>
                 </mu-card-actions>
                 <mu-text-field label="FLAG" v-model="flagInput" labelFloat/>
             </mu-card>
-            <mu-flat-button v-if="challenge.power" slot="actions" :href="routeList.get('edit') +'/' + challenge.id" primary label="编辑"/>
+            <mu-flat-button v-if="challenge.power" slot="actions" :href="routeList.get('edit') +'/' + challenge.id"
+                            primary label="编辑"/>
             <mu-flat-button v-if="challenge.power" slot="actions" @click="deleteChallenge" primary label="删除"/>
             <mu-flat-button slot="actions" @click="close" primary label="取消"/>
             <mu-flat-button slot="actions" primary @click="submitFlag" label="提交"/>
         </mu-dialog>
-        <mu-popup position="top" :overlay="false" :class="{ 'popup-success': submitStat }"
-                  popupClass="demo-popup-top" :open="topPopup">
+
+        <mu-dialog v-if="solversDialog" :open="solversDialog" title="ALL SOLVERS" @close="solversClose">
+            <mu-card>
+                <mu-list>
+                    <mu-sub-header>
+                        <span class="titleDesc">solver</span>
+                        <span class="subtitleDesc">time</span>
+                    </mu-sub-header>
+                    <mu-list-item v-for="(item, index) in solvers" :key="index">
+                        <span class="title">{{ item.name }}</span>
+                        <span class="subtitle">{{ item.pivot.created_at }}</span>
+                    </mu-list-item>
+                </mu-list>
+            </mu-card>
+            <mu-flat-button slot="actions" @click="solversClose" primary label="关闭"/>
+        </mu-dialog>
+
+        <mu-popup position="top" :overlay="false" :class="{ 'popup-success': submitStat }" popupClass="demo-popup-top"
+                  :open="topPopup">
             {{ result }}
         </mu-popup>
     </div>
@@ -42,11 +61,13 @@
         data: () => ({
             challenge: {},
             dialog: false,
+            solversDialog: false,
             topPopup: false,
             flagInput: null,
             result: "false",
             submitStat: false,
             show: true,
+            solvers: null,
             routeList,
         }),
         created() {
@@ -61,7 +82,6 @@
                             this.challenge.description = window.md.render(this.challenge.description);
                             this.flagInput = null;
                             this.dialog = true;
-                            console.log(this.challenge)
                         })
                         .catch((error) => {
                             console.log(error)
@@ -74,10 +94,13 @@
             close() {
                 this.dialog = false
             },
+            solversClose() {
+                this.solversDialog = false;
+            },
             submitFlag() {
                 axios.post(`${apiRoot}challenge/${this.challenge.id}`, {'flag': this.flagInput})
                     .then(response => {
-                        if (typeof(response.data) !== 'boolean') {
+                        if (typeof (response.data) !== 'boolean') {
                             this.result = response.data;
                             //  return 'already passed', so submit status is true
                             this.submitStat = true;
@@ -85,7 +108,8 @@
 
                             if (response.data) {
                                 this.result = '成功！';
-                                this.challenge.passed = true
+                                this.challenge.passed = true;
+                                this.challenge.solvers++;
                             } else {
                                 this.result = '失败！';
                             }
@@ -123,11 +147,28 @@
                         this.showPopup();
                     })
             },
+            getSolvers() {
+                axios.get(`${apiRoot}challenge/solvers/${this.challenge.id}`)
+                    .then(response => {
+                        this.solvers = response.data;
+                        this.solversDialog = true;
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            },
             reference() {
                 window.open(this.challenge.url, "_blank")
             },
             showPopup() {
                 this.topPopup = true
+            },
+            showSolvers() {
+                if (this.solvers === null) {
+                    this.getSolvers()
+                } else {
+                    this.solversDialog = true
+                }
             }
         },
         watch: {

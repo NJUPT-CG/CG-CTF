@@ -20,6 +20,7 @@
       float: right
       top: -20px
       right: 20px
+      z-index: 10
       .mu-icon
         padding: 10px
   .passed
@@ -40,7 +41,16 @@
     .challenge-card
       margin: 0 40px 40px 0
 
-
+.mu-dialog-body
+  .solvers-wrapper
+    float: right
+    z-index: 10
+  .subtitle, .subtitleDesc
+    float: right
+    &.subtitleDesc
+      margin-right: 16px
+  .mu-item
+    font-size: 14px
 
 .popup-success
   background: rgba(153, 26, 40, .8)

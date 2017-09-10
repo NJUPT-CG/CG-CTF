@@ -56,7 +56,6 @@ class User extends Authenticatable
         $challenges = $user->challenges()->get();
         $sorted = $challenges->sortByDesc('pivot.created_at');
         return $sorted->values();
-        #return $challenges;
     }
 
     //用户得分

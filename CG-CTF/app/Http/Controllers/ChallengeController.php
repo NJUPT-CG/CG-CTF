@@ -132,14 +132,13 @@ class ChallengeController extends Controller
             ->get();
 
         foreach ($challenges as $challenge => $v) {
-             $challenges[$challenge]->solvers = $challenges[$challenge]->users()->count();
+             $challenges[$challenge]->solversCount = $challenges[$challenge]->users()->count();
         }
 
         $user = Auth::guard('api')->user();
         if (!!$user) {
             $challenges->map(function ($challenge) use ($user){
                 $challenge->passed = $user->challengePassed($challenge->id);
-              //  $challenge->solvers = $challenge->users()->count();
                 return $challenge;
             });
         }
@@ -226,5 +225,13 @@ class ChallengeController extends Controller
     public static function isAdmin($power)
     {
         return Hash::check('admin', $power);
+    }
+
+
+    public function getSolvers(challenge $challenge)
+    {
+        $users = $challenge->users()->select('name')->get();
+        $sorted = $users->sortBy('pivot.created_at');
+        return $sorted->values();
     }
 }
