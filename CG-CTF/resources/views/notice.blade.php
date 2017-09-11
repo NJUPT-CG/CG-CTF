@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
 <table class="table">
-	<caption>Score Board</caption>
+	<caption>NOTICE</caption>
    <thead>
       <tr>
          <th>notice</th>
