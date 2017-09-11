@@ -35,7 +35,11 @@ Route::get('/score', 'ChallengeController@ShowScore');
 
 Route::get('about',function(){return view('about');});
 
+Route::get('publishNotice','NoticeController@index');
 
+Route::post('newNotice','NoticeController@newnotice');
+
+Route::get('notice','NoticeController@showNotice');
 
 Route::get('challenges', 'ChallengeController@showChallenges')->name('challenge');   //展示对应版块题目
 
