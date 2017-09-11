@@ -13,7 +13,7 @@
        @foreach($notices as $notice)
     <tbody>
       <tr>
-         <td width="80%">{{$notice['content']}}</td>
+         <td width="80%">{!! nl2br(e($notice['content'])) !!}</td>
 		      <td>{{$notice['created_at']}}</td>
 	   </tr>
    </tbody>
@@ -21,6 +21,6 @@
     @endif
 </table>
 
-
+  {{ $notices->links() }}
 </div>
 @endsection

@@ -30,7 +30,7 @@ class NoticeController extends Controller
         else return redirect()->route('login');
     }
     public function showNotice(){
-    	$notices=notice::where([])->orderBy('created_at','desc')->get();
+    	$notices=notice::where([])->orderBy('created_at','desc')->paginate(20);
     	return view('notice',['notices'=>$notices]);
     }
 }
