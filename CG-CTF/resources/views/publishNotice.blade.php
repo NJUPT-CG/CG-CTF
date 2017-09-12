@@ -12,7 +12,7 @@
 
                         <br>
 
-                        <textarea name="content"  rows="10" class="form-control" splaceholder="请输入内容" >{{old('content')}}</textarea>
+                        <textarea name="content"  rows="10" class="form-control" required="required" splaceholder="请输入内容" >{{old('content')}}</textarea>
                     
                         <br>
                         <button class="btn btn-lg btn-info">发布</button>

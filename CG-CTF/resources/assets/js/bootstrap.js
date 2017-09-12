@@ -22,6 +22,7 @@ let routes = [
     'profile',
     'create',
     'edit',
+    'publishNotice'
 ];
 
 let hashRoutesMap = (routes, routeList) => {
