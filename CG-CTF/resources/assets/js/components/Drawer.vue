@@ -17,6 +17,7 @@
                 </mu-list-item>
                 <mu-list-item title="Scoreboard" :href="routeList.get('scoreboard')"/>
                 <mu-list-item title="History" :href="routeList.get('score')"/>
+                <mu-list-item title="Notice" :href="routeList.get('notice')"/>
                 <mu-divider/>
                 <mu-list-item title="About" :href="routeList.get('about')"/>
             </mu-list>
