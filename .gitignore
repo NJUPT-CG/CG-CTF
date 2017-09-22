@@ -25,4 +25,4 @@ CG-CTF/vendor/composer/autoload_static.php
 CG-CTF/vendor/composer/ClassLoader.php
 CG-CTF/vendor/composer/LICENSE
 CG-CTF/public/js/app.js
-./.idea
+./.idea/*
