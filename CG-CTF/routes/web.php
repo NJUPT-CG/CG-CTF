@@ -27,6 +27,7 @@ Route::post('/editchallenge/{id}', 'ChallengeController@editchallenge');
 Route::get('/profile','UserController@profile');
 Route::post('/ProfileEdit','UserController@ProfileEdit');
 Route::delete('/delete/{id}','ChallengeController@delete');
+Route::get('/userDetail/{id}','ChallengeController@userDetail');
 
 // 计分板测试
 Route::get('/scoreboard', 'ChallengeController@ShowScoreBoard');

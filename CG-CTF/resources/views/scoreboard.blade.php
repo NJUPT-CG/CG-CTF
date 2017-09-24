@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-<table class="table">
+<table class="table table-hover">
 	<caption>Score Board</caption>
    <thead>
       <tr>
@@ -14,7 +14,7 @@
    @if(isset($users))
        @foreach($users as $user)
     <tbody>
-      <tr>
+      <tr onclick="location.href='{{ url('userDetail/'.$user['id'] ) }}';">
          <td>{{$user['rank']}}</td>
          <td>{{$user['name']}}</td>
 		  <td>{{$user['totalScore']}}</td>

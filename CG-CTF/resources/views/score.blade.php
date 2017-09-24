@@ -2,6 +2,7 @@
 @section('content')
 <div class="container">
 <table class="table">
+  <caption  style="font-weight:bold;font-size:large;">User Name:{{$name or '' }}</caption>
 	<caption>Total Score:{{$score or '' }}</caption>
    <thead>
       <tr>

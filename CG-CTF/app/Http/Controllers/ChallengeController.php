@@ -108,11 +108,21 @@ class ChallengeController extends Controller
     {
         if (Auth::check()) {
             $id = Auth::id();
+            $name=Auth::user()->name;
             $score = User::userscore($id);
             $challenges = User::solvedchallenges($id);
             //return $challenges;
-            return view('score', ['score' => $score, 'challenges' => $challenges]);
+            return view('score', ['name'=>$name , 'score' => $score, 'challenges' => $challenges]);
         } else return redirect()->route('login');
+    }
+
+    public function userDetail($id)
+    {
+            $score = User::userscore($id);
+            $challenges = User::solvedchallenges($id);
+            $name=User::find($id)->name;
+            //return $challenges;
+            return view('score', ['name'=>$name ,'score' => $score, 'challenges' => $challenges]);
     }
 
     //  api part
