@@ -53,3 +53,16 @@ Route::get('challenges', 'ChallengeController@showChallenges')->name('challenge'
 Route::post('submitflag/{id}', 'ChallengeController@submitFlag');
 
 Route::get('/test', 'ChallengeController@getQuestionsBelongsToClass');
+
+// Route::get('scoretest',function(){
+// 		$challenges=App\challenge::all();
+// 		foreach ($challenges as $challenge => $value) {
+// 			//$challenges[$challenge]->solversCount = $challenges[$challenge]->users()->count();
+// 			$cont=$challenges[$challenge]->users()->count();
+// 			if($cont){
+// 			$challenges[$challenge]->score=10000/($cont+9);
+// 			$challenges[$challenge]->save();
+// 			}
+// 		}
+// 	});
+

@@ -10,6 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class ChallengeController extends Controller
 {
@@ -196,7 +197,10 @@ class ChallengeController extends Controller
         }
 
         if ($challenge->flag === $request->get('flag')) {
-            challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
+            DB::beginTransaction();
+            $count=challenge_user::where([['userid','=',$user->id],['challengeid','=',$challenge->id]])->lockForUpdate()->count();
+            if($count==0) challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
+            DB::commit();
             return 'true';
         }
         return 'false';
