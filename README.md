@@ -15,13 +15,19 @@ A Simple CTF Practice &amp; Competition Platform
 composer install --ignore-platform-reqs
 
 修改 .env.example 中的内容
+
 APP_URL 必填,为网站url 
+
 DB_     必填,按照自己服务器上的配置填写
+
 MAIL_   用于发送重置密码的邮件，如果不填，则无法重置密码
+
 ADMIN_CODE 用于创建管理员的密码
+
 并保存为.env
 
 执行 php artisan key:generate
+
 执行 php artisan migrate
 
 ### 前端
