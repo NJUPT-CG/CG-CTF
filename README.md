@@ -6,9 +6,15 @@ A Simple CTF Practice &amp; Competition Platform
 
 安装CGCTF前,确保服务器上已装好 apache/nginx mysql php5.0+(推荐7.0+) composer node.js npm 
 
+另外 因为node版本过高的时候 node-sass会不支持,建议node版本为7.x
+
+并确保php的一些扩展模块也已被安装//反正装的时候 缺啥装啥。。。。
+
 克隆到本地之后
 
 composer install --ignore-platform-reqs
+
+composer update
 
 修改 .env.example 中的内容
 
