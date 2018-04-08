@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 namespace App\Http\Controllers;
-
+use Illuminate\Validation\Rule;
+use Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
@@ -47,4 +48,32 @@ class UserController extends Controller
         Auth::logout();
         return view('CG-CTF');
     }
+
+    public function regadmin(Request $userdata){
+        $userdata->flash();
+        $request=$userdata->all();
+            $v=Validator::make($request,[
+            'name' => 'required|string|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            'confirmcode'=> ['required',Rule::in([env('ADMIN_CODE')]),],
+            ]);
+            if ($v->fails()) {
+            return redirect('IN1t4dmin_Cg_c7f_X1c_+1s')
+                        ->withErrors($v)
+                        ->withInput();
+        }
+        else{
+            return User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+            'power' => bcrypt('admin'),
+            'api_token' => str_random(60)
+        ]);
+            }
+
+
+    }
+
 }

@@ -8,6 +8,8 @@ A Simple CTF Practice &amp; Competition Platform
 
 访问 "/createChallenges" 来生成100个测试用题, flag 是 1
 
+访问 /IN1t4dmin_Cg_c7f_X1c_+1s 可新增管理员, confirm code 为env中填写的 ADMIN_CODE 值
+
 ### 前端
 
 需要安装依赖，嫌太慢可以挂梯子，或者用cnpm、yarn
