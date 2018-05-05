@@ -201,6 +201,7 @@ class ChallengeController extends Controller
             $count=challenge_user::where([['userid','=',$user->id],['challengeid','=',$challenge->id]])->lockForUpdate()->count();
             if($count==0) challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
             DB::commit();
+            $user->updateScoreTime();
             return 'true';
         }
         return 'false';

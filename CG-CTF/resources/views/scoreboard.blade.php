@@ -17,8 +17,8 @@
       <tr onclick="location.href='{{ url('userDetail/'.$user['id'] ) }}';">
          <td>{{$user['rank']}}</td>
          <td>{{$user['name']}}</td>
-		  <td>{{$user['totalScore']}}</td>
-		  <td>{{$user['lastsubtime']}}</td>
+		  <td>{{$user['score']}}</td>
+		  <td>{{$user['time']}}</td>
 	   </tr>
    </tbody>
        @endforeach

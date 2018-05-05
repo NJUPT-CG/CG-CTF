@@ -57,6 +57,7 @@ Route::get('/test', 'ChallengeController@getQuestionsBelongsToClass');
 Route::get('IN1t4dmin_Cg_c7f_X1c_+1s',function(){return view('regadmin');});
 
 Route::post('regadmin','UserController@regadmin');
+Route::get('scoreboardupdateall','UserController@updateAll');
 // Route::get('scoretest',function(){
 // 		$challenges=App\challenge::all();
 // 		foreach ($challenges as $challenge => $value) {

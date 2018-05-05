@@ -75,5 +75,13 @@ class UserController extends Controller
 
 
     }
+    public function updateAll()
+    {
+        $users = User::all();
+        foreach ($users as $user => $v) {
+            $users[$user]->updateScoreTime();
+        }
+        return redirect('scoreboard');
+    }
 
 }

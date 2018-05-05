@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'power', 'finishedchallenge', 'api_token'
+        'name', 'email', 'password', 'power', 'finishedchallenge', 'api_token','score','time'
     ];
 
     /**
@@ -69,12 +69,21 @@ class User extends Authenticatable
         }
         return $totalScore;
     }
+    public function updateScoreTime()
+    {
+        $score=User::userscore($this->id);
+        $this->score = $score;
+        $stime = User::solvedchallenges($this->id)->first();
+        $this->time = $stime['pivot']['created_at'];
+        $this->save();
+    }
 
     //计分板
     public static function scoreboard()
     {
         $scores = collect([]);
-        $users = User::all();
+        $sorted = User::orderBy('score','desc')->orderBy('time','asc')->get();
+        /*
         foreach ($users as $user) {
             #echo $user;
             $id = $user->id;
@@ -92,12 +101,14 @@ class User extends Authenticatable
         }
         //echo $scores;
         //$sorted = $scores->sortBy('lastsubtime')->sortByDesc('totalScore');
+
         $sorted = $scores->sort(
             function ($a, $b) {
                 return ($b['totalScore'] - $a['totalScore']) ?: strcmp($a['lastsubtime'], $b['lastsubtime']);
             }
         );
         //echo $sorted;
+        */
         $rank = 0;
         foreach ($sorted as $sort => $v) {
             $temp = collect($sorted[$sort]);
