@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container">
+<div class="container" v-pre>
 <table class="table">
   <caption  style="font-weight:bold;font-size:large;">User Name:{{$name or '' }}</caption>
 	<caption>Total Score:{{$score or '' }}</caption>

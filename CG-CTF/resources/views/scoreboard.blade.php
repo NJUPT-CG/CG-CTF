@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container">
+<div class="container" v-pre>
 <table class="table table-hover">
 	<caption>Score Board</caption>
    <thead>
