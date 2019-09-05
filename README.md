@@ -1,54 +1,41 @@
-# CG-CTF
-A Simple CTF Practice &amp; Competition Platform
+# Welcome to CGCTF 👋
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)
 
 
-访问 /IN1t4dmin_Cg_c7f_X1c_+1s 可新增管理员, confirm code 为env中填写的 ADMIN_CODE 值
+> A open source CTF platform.
 
-安装CGCTF前,确保服务器上已装好 apache/nginx mysql php5.0+(推荐7.0+) composer node.js npm 
+### Homepage🏠
 
-另外 因为node版本过高的时候 node-sass会不支持,建议node版本为7.x
+[https://cgctf.nuptsast.com/](https://cgctf.nuptsast.com/)
+## Author
 
-并确保php的一些扩展模块也已被安装//反正装的时候 缺啥装啥。。。。
+- homura
 
-要注意web根目录在 CG-CTF/CG-CTF/public, 保证CG-CTF 根目录下的文件 (特别是 .env) 不能被访问到
+[![-w70](https://avatars1.githubusercontent.com/u/23479846?s=400&v=4)](https://github.com/wjbsyc)
 
-克隆到本地之后
+- meizjm3i
 
-composer install --ignore-platform-reqs
+[![-w70](https://avatars2.githubusercontent.com/u/21093155?s=400&u=1ddbe1426304ad37bc0af2514ceac46c8ca783bb&v=4)](https://github.com/meizjm3i)
 
-composer update
+- acdxvfsvd
 
-修改 .env.example 中的内容
+[![-w70](https://avatars2.githubusercontent.com/u/23629203?s=400&v=4)](https://github.com/acdxvfsvd)
 
-APP_URL 必填,为网站url 
+- GooeyNyan
 
-DB_     必填,按照自己服务器上数据库的配置填写
-
-MAIL_   用于发送重置密码的邮件，如果不填，则无法重置密码
-
-ADMIN_CODE 用于创建管理员的密码,（创建完毕可以删除该值，也可以将routes/web.php中 'IN1t4dmin_Cg_c7f_X1c_+1s' 路由注释掉 ）
-
-并保存为.env
-
-在 CG-CTF/CG-CTF 目录下:
-
-执行 php artisan key:generate 
-
-执行 php artisan migrate  
-
-这两条命令第一条用于创建该项目的Key,用于加密，第二条用于迁移数据库，会在数据库中创建平台所需要的表
-
-### 前端
-
-需要安装依赖，嫌太慢可以挂梯子，或者用cnpm、yarn
-
-```
-npm install
-```
+[![-w70](https://avatars0.githubusercontent.com/u/16070774?s=400&v=4)](https://github.com/GooeyNyan)
 
 
-之后同步前端的样式需要运行
-```
-npm run dev
-```
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!
+
+Feel free to check [issues page](https://github.com/CGCTF/CGCTF/issues).
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+
 
