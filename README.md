@@ -1,8 +1,7 @@
 # Welcome to CGCTF 👋
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](https://github.com/CGCTF/CGCTF/new/master)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/kefranabg/readme-md-generator/graphs/commit-activity)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE)
+
 
 [![Twitter: meizjm3i](https://img.shields.io/twitter/follow/meizjm3i.svg?style=social)](https://twitter.com/meizjm3i)
 
