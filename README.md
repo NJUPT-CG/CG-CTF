@@ -2,7 +2,7 @@
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](https://github.com/CGCTF/CGCTF/new/master)
 
-
+[![Twitter: homura](https://img.shields.io/twitter/follow/AkemiHomura_YC.svg?style=social)](https://twitter.com/AkemiHomura_YC)
 [![Twitter: meizjm3i](https://img.shields.io/twitter/follow/meizjm3i.svg?style=social)](https://twitter.com/meizjm3i)
 
 > A open source CTF platform.
