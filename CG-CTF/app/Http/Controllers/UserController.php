@@ -10,6 +10,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use Carbon\Carbon;
 class UserController extends Controller
 {
     public function index(){
@@ -39,6 +40,7 @@ class UserController extends Controller
         if(Auth::check()){
             $id=Auth::id();
             $userdata=User::find($id);
+            //dd($userdata);
             return view('profile',['userdata'=>$userdata]);
         }
         else return redirect()->route('login');
@@ -69,11 +71,16 @@ class UserController extends Controller
             'email' => $request['email'],
             'password' => bcrypt($request['password']),
             'power' => bcrypt('admin'),
-            'api_token' => str_random(60)
+            'api_token' => str_random(60),
+            'email_verified_at' => Carbon::now()
         ]);
             }
 
 
+    }
+    public function detailIndex()
+    {
+        return view('score');
     }
     public function updateAll()
     {

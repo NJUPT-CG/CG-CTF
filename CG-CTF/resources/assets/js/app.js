@@ -16,15 +16,22 @@ require('./bootstrap');
 import 'babel-polyfill'
 import MuseUI from 'muse-ui';
 import 'muse-ui/dist/muse-ui.css';
-import 'muse-ui/dist/theme-carbon.css'; // 使用 carbon 主题
+import theme from 'muse-ui/lib/theme';
+import Loading from 'muse-ui-loading';
+import 'muse-ui-loading/dist/muse-ui-loading.css';
+theme.use('light');//import 'muse-ui/dist/theme-carbon.css'; // 使用 carbon 主题
+
 
 Vue.use(MuseUI);
-
+Vue.use(Loading);
 Vue.component('drawer', require('./components/Drawer.vue'));
 Vue.component('appBar', require('./components/AppBar.vue'));
 Vue.component('tabBar', require('./components/TabBar.vue'));
 Vue.component('challengeCard', require('./components/ChallengeCard.vue'));
 Vue.component('challenges', require('./components/Challenges.vue'));
+Vue.component('scoreboard', require('./components/scoreboard.vue'));
+Vue.component('userdetail', require('./components/userDetail.vue'));
+Vue.component('submitsboard', require('./components/submitsboard.vue'));
 
 const app = new Vue({
     el: '#app'

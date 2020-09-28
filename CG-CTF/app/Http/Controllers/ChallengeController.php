@@ -33,7 +33,7 @@ class ChallengeController extends Controller
                 'description' => $request['description'],
                 'url' => $request['url'],
                 'flag' => $request['flag'],
-                //'info'=>$request['info'],
+                'info'=>$request['info'],
                 'score' => $request['score'],
             ]);
             if($r) return redirect()->route('home');
@@ -61,7 +61,7 @@ class ChallengeController extends Controller
             $challenge->description = $request['description'];
             $challenge->url = $request['url'];
             $challenge->flag = $request['flag'];
-            //$challenge->info=$request['info'];
+            $challenge->info=$request['info'];
             $challenge->score = $request['score'];
             if ($challenge->save()) return redirect()->route('login');
             else return view('edit', ['status' => '出现错误']);
@@ -84,36 +84,43 @@ class ChallengeController extends Controller
     {
         return view('challenge');
     }
-
+    public function ScoreboardIndex()
+    {
+        return view('scoreboard');
+    }
     public function ShowScoreBoard(Request $request)
     {
         $users = User::scoreboard()->toArray();
-        $perPage = 50;
-        if ($request->has('page')) {
-            $current_page = $request->input('page');
-            $current_page = $current_page <= 0 ? 1 : $current_page;
-        } else {
-            $current_page = 1;
-        }
-        $item = array_slice($users, ($current_page - 1) * $perPage, $perPage); //注释1
-        $total = count($users);
-        $paginator = new LengthAwarePaginator($item, $total, $perPage, $current_page, [
-            'path' => Paginator::resolveCurrentPath(), //注释2
-            'pageName' => 'page',
-        ]);
-        $userlist = $paginator->toArray()['data'];
-        return view('scoreboard', ['users' => $userlist, 'paginator' => $paginator]);
+        $userlist = $users;
+        // $perPage = 50;
+        // if ($request->has('page')) {
+        //     $current_page = $request->input('page');
+        //     $current_page = $current_page <= 0 ? 1 : $current_page;
+        // } else {
+        //     $current_page = 1;
+        // }
+        // $item = array_slice($users, ($current_page - 1) * $perPage, $perPage); //注释1
+        // $total = count($users);
+        // $paginator = new LengthAwarePaginator($item, $total, $perPage, $current_page, [
+        //     'path' => Paginator::resolveCurrentPath(), //注释2
+        //     'pageName' => 'page',
+        // ]);
+        // $userlist = $paginator->toArray()['data'];
+        return $userlist;
+        //dd($userlist);
+        #return view('scoreboard', ['users' => $userlist, 'paginator' => $paginator]);
     }
 
     public function ShowScore()
     {
         if (Auth::check()) {
             $id = Auth::id();
-            $name=Auth::user()->name;
-            $score = User::userscore($id);
-            $challenges = User::solvedchallenges($id);
+            // $name=Auth::user()->name;
+            // $score = User::userscore($id);
+            // $challenges = User::solvedchallenges($id);
             //return $challenges;
-            return view('score', ['name'=>$name , 'score' => $score, 'challenges' => $challenges]);
+            return redirect('/userDetail#'.$id);
+            // return view('score', ['name'=>$name , 'score' => $score, 'challenges' => $challenges]);
         } else return redirect()->route('login');
     }
 
@@ -123,7 +130,9 @@ class ChallengeController extends Controller
             $challenges = User::solvedchallenges($id);
             $name=User::find($id)->name;
             //return $challenges;
-            return view('score', ['name'=>$name ,'score' => $score, 'challenges' => $challenges]);
+            $re = array('name'=>$name ,'score' => $score, 'challenges' => $challenges);
+            return $re;
+            //return view('score', ['name'=>$name ,'score' => $score, 'challenges' => $challenges]);
     }
 
     //  api part
@@ -136,17 +145,45 @@ class ChallengeController extends Controller
      * @param Request $request
      * @return mixed
      */
+    public function historyIndex()
+    {
+        return view('submitsBoard');
+    }
+
+    public function submitsHistory(Request $data){
+        $users=User::all();
+        $sub=collect([]);
+        foreach ($users as $user) {
+            $sol=User::solvedchallenges($user->id);
+            
+            foreach ($sol as $s) {
+                $test = array('name'=>$user->name,'challenge'=>$s['title'],'score'=>$s['score'],'class'=>$s['class'],'time'=>$s['pivot']['created_at']->toDateTimeString());
+                $sub->push($test);
+            }
+        }
+        
+        return $sub->sortByDesc('time')->values();
+        //return view('results',['challenges'=>$sub->sortByDesc('time')]);
+    }
     public function getQuestionsBelongsToClass(Request $request)
     {
-        $challenges = challenge::where('class', $request->get('class'))
+        $user = Auth::guard('api')->user();
+        $power=$user?$user->power:'no';
+        if(!Hash::check('admin', $power)){
+        $challenges = challenge::where('class', $request->get('class'))->where('info','!=','hide')
             ->select('id', 'title', 'score')
             ->get();
-
+        }
+        else{
+             $challenges = challenge::where('class', $request->get('class'))
+            ->select('id', 'title', 'score')
+            ->get();
+        }
         foreach ($challenges as $challenge => $v) {
              $challenges[$challenge]->solversCount = $challenges[$challenge]->users()->count();
         }
 
-        $user = Auth::guard('api')->user();
+        //$user = Auth::guard('api')->user();
         if (!!$user) {
             $challenges->map(function ($challenge) use ($user){
                 $challenge->passed = $user->challengePassed($challenge->id);
@@ -170,13 +207,14 @@ class ChallengeController extends Controller
     {
         $user = Auth::guard('api')->user();
         $power = !!$user ? Hash::check('admin', $user->power) : false;
-
+        if($challenge->info != 'hide'||$power){
         return [
             'description' => $challenge->description,
             'url' => $challenge->url,
             'class' => $challenge->class,
             'power' => $power
         ];
+        }
     }
 
     /**
@@ -195,13 +233,28 @@ class ChallengeController extends Controller
         if ($user->challengePassed($challenge->id)) {
             return 'Already passed';
         }
-
-        if ($challenge->flag === $request->get('flag')) {
+        if($challenge->info != 'start') return 'Game Over!';
+        $dyn = ENV('DYN_FLAG');
+        $token = $user->api_token;
+        if (($challenge->flag === $request->get('flag') || ($dyn && 'N1CTF{'.hash('sha256',($challenge->flag).$token,false).'}' === $request->get('flag')) ) && $challenge->info==='start') 
+        {
+            $id=$challenge->id;
+            $c=challenge::find($id);       
             DB::beginTransaction();
             $count=challenge_user::where([['userid','=',$user->id],['challengeid','=',$challenge->id]])->lockForUpdate()->count();
-            if($count==0) challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id]);
+            if($count==0) 
+            {   
+                $cnt = $c->users()->count();
+                challenge_user::create(['userid' => $user->id, 'challengeid' => $challenge->id,'rank'=>($cnt+1)]);
+            }
             DB::commit();
             $user->updateScoreTime();
+            $cnt=$c->users()->count();
+            if($cnt)
+            {
+                if( $c->score !=0 ){$c->score=10000/($cnt+9);}
+                $c->save();
+            }
             return 'true';
         }
         return 'false';

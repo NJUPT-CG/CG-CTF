@@ -1,32 +1,61 @@
 <template>
     <div class="challenge-card" v-if="show">
         <mu-paper class="challenge-item" :zDepth="1">
-            <mu-appbar :title="challenge.title"/>
-            <mu-float-button icon="add" mini @click="open"/>
+            <mu-appbar :title="challenge.title" color="primary" />
+           <!--  <mu-float-button icon="add" mini @click="open"/> -->
+              <mu-button fab color="primary" small class="float" @click="open">
+                 <mu-icon value="add"></mu-icon>
+                </mu-button>
             <mu-card-actions>
-                <mu-flat-button :label="challenge.score + 'pt'"/>
-                <mu-flat-button v-if="challenge.passed" class="passed" label="passed" @click="showSolvers"/>
+                <mu-button flat>
+                    {{challenge.score+'pt'}}
+                </mu-button>
+                <!-- <mu-flat-button :label="challenge.score + 'pt'"/> -->
+                <mu-button flat v-if="challenge.passed" class="passed" @click="showSolvers">
+                    passed
+                </mu-button>
+               <!--  <mu-flat-button v-if="challenge.passed" class="passed" label="passed" @click="showSolvers"/> -->
             </mu-card-actions>
         </mu-paper>
 
         <mu-dialog v-if="dialog" :open="dialog" :title="challenge.title" @close="close">
             <mu-card>
+                <mu-container>
                 <mu-card-actions class="solvers-wrapper">
-                    <mu-flat-button :label="'solvers: ' + challenge.solversCount" @click="showSolvers"/>
+                    <mu-button flat @click="showSolvers">
+                    {{"solvers:"+challenge.solversCount}}
+                    </mu-button>
                 </mu-card-actions>
                 <mu-card-title :subTitle="challenge.class + ' ' + challenge.score + 'pt'"/>
                 <mu-divider/>
                 <mu-card-text v-html="challenge.description"></mu-card-text>
                 <mu-card-actions>
-                    <mu-flat-button v-if="challenge.url" label="题目地址" @click="reference"/>
+                    <mu-button flat v-if="challenge.url" label="题目地址" @click="reference">
+                        Link
+                    </mu-button>
                 </mu-card-actions>
-                <mu-text-field label="FLAG" v-model="flagInput" labelFloat/>
+                <!-- <mu-text-field v-model="value6" label="Label Float" prefix="$" label-float ></mu-text-field> -->
+                <mu-text-field label="FLAG" v-model="flagInput" label-float></mu-text-field>
+            </mu-container>
             </mu-card>
-            <mu-flat-button v-if="challenge.power" slot="actions" :href="routeList.get('edit') +'/' + challenge.id"
-                            primary label="编辑"/>
-            <mu-flat-button v-if="challenge.power" slot="actions" @click="deleteChallenge" primary label="删除"/>
-            <mu-flat-button slot="actions" @click="close" primary label="取消"/>
-            <mu-flat-button slot="actions" primary @click="submitFlag" label="提交"/>
+            <mu-button flat v-if="challenge.power" slot="actions" :href="routeList.get('edit') +'/' + challenge.id"
+                            color="secondary" >
+                            Edit
+            </mu-button>
+           <!--  <mu-flat-button v-if="challenge.power" slot="actions" :href="routeList.get('edit') +'/' + challenge.id"
+                            primary label="编辑"/> -->
+            <mu-button flat v-if="challenge.power" slot="actions"  @click="openAlertDialog"  color="secondary" >
+                            Delete
+            </mu-button>
+          <!--   <mu-flat-button v-if="challenge.power" slot="actions" @click="deleteChallenge" primary label="删除"/> -->
+              <mu-button flat slot="actions"   @click="close" primary color="secondary" >
+                            Cancel
+            </mu-button>        
+           <!--  <mu-flat-button slot="actions" @click="close" primary label="取消"/> -->
+              <mu-button flat slot="actions"   @click="submitFlag" primary color="secondary" >
+                            Submit
+            </mu-button> 
+          <!--   <mu-flat-button slot="actions" primary @click="submitFlag" label="提交"/> -->
         </mu-dialog>
 
         <mu-dialog v-if="solversDialog" :open="solversDialog" title="ALL SOLVERS" @close="solversClose">
@@ -36,19 +65,35 @@
                         <span class="titleDesc">solver</span>
                         <span class="subtitleDesc">time</span>
                     </mu-sub-header>
+                    
                     <mu-list-item v-for="(item, index) in solvers" :key="index">
+                        <mu-list-item-content>
                         <span class="title">{{ item.name }}</span>
                         <span class="subtitle">{{ item.pivot.created_at }}</span>
+                        </mu-list-item-content>
                     </mu-list-item>
+
                 </mu-list>
             </mu-card>
-            <mu-flat-button slot="actions" @click="solversClose" primary label="关闭"/>
+            <mu-button flat slot="actions"   @click="solversClose" primary color="secondary" >
+                            Close
+            </mu-button> 
+           <!--  <mu-flat-button slot="actions" @click="solversClose" primary label="关闭"/> -->
         </mu-dialog>
 
-        <mu-popup position="top" :overlay="false" :class="{ 'popup-success': submitStat }" popupClass="demo-popup-top"
+<!--         <mu-popup position="top" :overlay="false" :class="{ 'popup-success': submitStat }" popupClass="demo-popup-top"
                   :open="topPopup">
             {{ result }}
-        </mu-popup>
+        </mu-popup> -->
+        <mu-dialog title="result" :overlay="false" popupClass="demo-popup-top" :open="topPopup">
+        {{ result }}
+        <mu-button slot="actions" flat color="primary" @click="closeSimpleDialog">Close</mu-button>
+        </mu-dialog>
+        <mu-dialog title="Delete?" width="600" max-width="80%" :esc-press-close="false" :overlay-close="false" :open.sync="openAlert">
+            Are you sure to delete this?
+         <mu-button slot="actions" flat color="primary" @click="closeAlertDialog">No</mu-button>
+         <mu-button slot="actions" flat color="primary" @click="deleteChallenge">Yes</mu-button>
+         </mu-dialog>
     </div>
 </template>
 
@@ -69,6 +114,7 @@
             show: true,
             solvers: null,
             routeList,
+            openAlert: false,
         }),
         created() {
             this.challenge = this.challengeBaseInfo;
@@ -107,11 +153,11 @@
                         } else {
 
                             if (response.data) {
-                                this.result = '成功！';
+                                this.result = 'Success！';
                                 this.challenge.passed = true;
                                 this.challenge.solvers++;
                             } else {
-                                this.result = '失败！';
+                                this.result = 'Fail！';
                             }
                             this.submitStat = response.data
                         }
@@ -162,6 +208,15 @@
             },
             showPopup() {
                 this.topPopup = true
+            },
+            closeSimpleDialog () {
+                this.openSimple = false;
+            },
+            openAlertDialog () {
+                this.openAlert = true;
+            },
+            closeAlertDialog () {
+                this.openAlert = false;
             },
             showSolvers() {
                 if (this.solvers === null) {

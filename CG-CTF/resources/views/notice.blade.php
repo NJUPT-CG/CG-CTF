@@ -1,12 +1,13 @@
 @extends('layouts.app')
 @section('content')
+
 <div class="container" v-pre>
 <table class="table">
-	<caption>NOTICE</caption>
+  <caption>NOTICE</caption>
    <thead>
       <tr>
       <th>notice</th>
-		  <th>time</th>
+      <th>time</th>
       @if(App\User::isadmin())
       <th>admin</th>
       @endif
@@ -16,12 +17,12 @@
        @foreach($notices as $notice)
     <tbody>
       <tr>
-         <td width="80%">{!! nl2br(e($notice['content'])) !!}</td>
-		      <td>{{$notice['created_at']}}</td>
+         <td width="80%">{!! nl2br(e($notice['content'])) !!} </td>
+          <td>{{$notice['created_at']}}</td>
           @if(App\User::isadmin())
           <th><a href="{{ url('notice/edit/'.$notice['id']) }}" class="btn btn-info">编辑</a></th>
          @endif
-	   </tr>
+     </tr>
    </tbody>
        @endforeach
     @endif
@@ -29,4 +30,5 @@
 
   {{ $notices->links() }}
 </div>
+
 @endsection

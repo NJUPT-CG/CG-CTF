@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 // 获取分类所有试题
 Route::get('/challenges', 'ChallengeController@getQuestionsBelongsToClass');
-
+Route::get('/scoreboard', 'ChallengeController@ShowScoreBoard');
 // 获取试题详细信息
 Route::get('/challenge/detail/{challenge}', 'ChallengeController@getQuestionDetail');
 
@@ -31,3 +31,6 @@ Route::delete('/challenge/{challenge}', 'ChallengeController@deleteChallenge')->
 
 // 获取已解决的用户信息
 Route::get('/challenge/solvers/{challenge}', 'ChallengeController@getSolvers');
+Route::get('/userDetail/{id}','ChallengeController@userDetail');
+
+Route::get('/SubmitsBoard','ChallengeController@submitsHistory');

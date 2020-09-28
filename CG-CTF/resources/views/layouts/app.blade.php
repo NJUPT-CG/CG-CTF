@@ -28,7 +28,6 @@
     @if(strpos(Request::url(), 'challenges'))
         <challenges :login="{{ Auth::check() ? "true" : "false" }}"></challenges>
     @endif
-
     @yield('content')
 </div>
 

@@ -17,6 +17,7 @@ class CreateChallengeUsersTable extends Migration
             $table->increments('id');
             $table->integer('userid');
             $table->integer('challengeid');
+            $table->integer('rank')->nullable();
             $table->timestamps();
         });
     }

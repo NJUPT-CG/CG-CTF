@@ -10,14 +10,14 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap"
 
 .mu-dialog
+  width: 50%
   .mu-text-field
-    margin-left: 22px
 
 .challenge-card
   .challenge-item
     width: 300px
     height: 160px
-    .mu-float-button
+    .float
       float: right
       top: -20px
       right: 20px
@@ -56,6 +56,12 @@
   .mu-item
     font-size: 14px
 
+.mu-item__open 
+  .toggle-icon 
+    -webkit-transform: rotate(180deg)
+    transform: rotate(180deg)
+a.mu-item-wrapper:hover
+  text-decoration: none
 .popup-success
   background: rgba(153, 26, 40, .8)
 .demo-popup-top
