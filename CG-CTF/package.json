@@ -22,7 +22,7 @@
     "vue": "^2.1.10"
   },
   "dependencies": {
-    "markdown-it": "^8.4.0",
+    "markdown-it": "^12.3.2",
     "muse-ui": "3.0.1",
     "muse-ui-carbon-theme": "^0.1.0",
     "muse-ui-loading": "^0.2.0"
